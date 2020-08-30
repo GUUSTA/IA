@@ -1,4 +1,4 @@
-from Ponto import Ponto
+from Aux import Ponto, Terreno
 import math
 
 class ep1:
@@ -24,10 +24,6 @@ class ep1:
         return b
 
 ep = ep1()
-p1 = Ponto()
-p1.x = 1
-p1.y = 2
-p2 = Ponto()
-p2.x = 3
-p2.y = 4
+p1 = Ponto(1, 2, Terreno.AGUA)
+p2 = Ponto(1, 2, Terreno.AREIA)
 print(ep.distEuclidiana(p1, p2))
