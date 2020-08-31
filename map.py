@@ -12,7 +12,8 @@ class Map(object):
     def __init__(self, rangeX, rangeY):
         self.rangeX = rangeX
         self.rangeY = rangeY
-        self.map = [[ 0 for y in range( self.rangeY )] for x in range( self.rangeX )]
+        self.randMap()
+        self.printMap()
 
     def randMap(self):
         self.map = [[ random.randint(1, 4) for y in range( self.rangeY )] for x in range( self.rangeX )]
@@ -39,6 +40,3 @@ class Map(object):
             print()
         return
 
-matrixInstance = Map(6, 6)
-matrixInstance.randMap()
-matrixInstance.printMap()

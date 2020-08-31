@@ -1,8 +1,16 @@
 from Aux import Ponto, Terreno
+from map import Map
 import math
 
 class ep1:
 
+    map: Map
+    estadoAtual: Ponto
+
+    def __init__(self, rangeX, rangeY):
+        self.map = Map(rangeX, rangeY)
+        self.estadoAtual = Ponto(rangeX - 1, 0, Terreno.INICIO)
+        
     def movimentoSucessor(self):
         return
     
@@ -12,8 +20,17 @@ class ep1:
     def heuristica(self):
         return
     
-    def custo(self):
-        return
+    def custo(self, ponto_destino: Ponto):
+        if ponto_destino == Terreno.TERRA:
+            return 1
+        elif ponto_destino == Terreno.AGUA:
+            return 3
+        elif ponto_destino == Terreno.AREIA:
+            return 6
+        elif ponto_destino == Terreno.BARREIRA:
+            return 999
+        elif ponto_destino == Terreno.FINAL:
+            return -100
     
     def aEstrela(self):
         return
@@ -23,7 +40,10 @@ class ep1:
         b = math.sqrt(a)
         return b
 
-ep = ep1()
-p1 = Ponto(1, 2, Terreno.AGUA)
-p2 = Ponto(1, 2, Terreno.AREIA)
-print(ep.distEuclidiana(p1, p2))
+ep = ep1(6, 6)
+
+
+
+# p1 = Ponto(1, 2, Terreno.AGUA)
+# p2 = Ponto(1, 2, Terreno.AREIA)
+# print(ep.distEuclidiana(p1, p2))
