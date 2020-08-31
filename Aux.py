@@ -1,12 +1,12 @@
 from enum import Enum
 
 class Terreno(Enum):
-	AREIA = 1
+	INICIO = 0
+	TERRA = 1
 	AGUA = 2
-	TERRA = 3
+	AREIA = 3
 	BARREIRA = 4
-	INICIAL = 5
-	FINAL = 6
+	FINAL = 5
 
 class Ponto:
 	x: int
