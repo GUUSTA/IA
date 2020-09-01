@@ -1,8 +1,11 @@
 from Aux import Ponto, Terreno
 from map import Map
 from A_Star import a_estrela
-from A_Estrela_tutorial import search
+#from A_Estrela_tutorial import search
+from astar_Nic import astar
 import math
+
+trial: [[int]]
 
 
 class ep1:
@@ -15,8 +18,9 @@ class ep1:
         self.map = Map(rangeX, rangeY)
         self.estadoAtual = Ponto(rangeX - 1, 0, Terreno.INICIO)
         self.estadoFinal = Ponto(0, rangeY - 1, Terreno.FINAL)
-        search(self.map, self.estadoAtual, self.estadoFinal)
-        # print(variavel)
+        trial = map
+        variavel = astar(self.trial, self.estadoAtual, self.estadoFinal, True)
+        print(variavel)
 
     def gerarSucessores(self):
         return
