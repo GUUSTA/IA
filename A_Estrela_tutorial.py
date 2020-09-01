@@ -1,6 +1,7 @@
 #import numpy as np
 from Aux import Terreno, Ponto
 from map import Map
+import array
 
 
 class Node:
@@ -70,20 +71,23 @@ def search(maze: Map, start: Node, end: Node):
 
         current_node = yet_to_visit_list[0]
         current_index = 0
-        for index, item in enumerate(yet_to_visit_list):
+        index = 0
+
+        for item in yet_to_visit_list:
             if item.f < current_node.f:
                 current_node = item
                 current_index = index
+            index += 1
 
         if outer_iterations > max_interations:
             print("Muitas iteracoes, nao funciona")
-            return return_path(current_node, maze)
+            return return_path(self=None, current_node=current_node, maze=maze)
 
         yet_to_visit_list.pop(current_index)
         visited_list.append(current_node)
 
         if current_node == end_node:
-            return return_path(current_node, maze)
+            return return_path(self=None, current_node=current_node, maze=maze)
 
     children = [Node]
 

@@ -15,8 +15,8 @@ class ep1:
         self.map = Map(rangeX, rangeY)
         self.estadoAtual = Ponto(rangeX - 1, 0, Terreno.INICIO)
         self.estadoFinal = Ponto(0, rangeY - 1, Terreno.FINAL)
-        variavel = search(self.map, self.estadoAtual, self.estadoFinal)
-        print(variavel)
+        search(self.map, self.estadoAtual, self.estadoFinal)
+        # print(variavel)
 
     def gerarSucessores(self):
         return
