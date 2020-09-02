@@ -29,7 +29,6 @@ class Node:
     def __gt__(self, other):
         return self.f > other.f
 
-
 def custo(value):
     if value == Terreno.INICIO.value:
         return 0

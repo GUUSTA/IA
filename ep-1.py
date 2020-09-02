@@ -25,4 +25,4 @@ class ep1:
         return b
 
 
-ep = ep1(3, 6)
+ep = ep1(10, 10)
