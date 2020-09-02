@@ -28,7 +28,7 @@ class Map(object):
             for c in range(0, self.rangeY):
                 terreno = self.map[l][c]
                 if terreno == Terreno.INICIO.value:
-                    print(f'[ ⬇️  ]', end='')
+                    print(f'[ 🦆 ]', end='')
                 elif terreno == Terreno.TERRA.value:
                     print(f'[ 🟫 ]', end='')
                 elif terreno == Terreno.AGUA.value:

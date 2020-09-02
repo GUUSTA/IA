@@ -1,4 +1,4 @@
-from Aux import Node, Terreno, getCost, getHeuristic, successTest
+from Aux import Node, Terreno, getCost, getHeuristic, successTest, generateChildren, printMovements
 import heapq, math
 
 
@@ -9,7 +9,6 @@ def returnPath(currentNode):
         path.append(current.position)
         current = current.parent
     return path[::-1]
-
 
 def a_estrela(map: [[int]], start, end):
 
@@ -23,7 +22,7 @@ def a_estrela(map: [[int]], start, end):
     heapq.heappush(notVisitedNodes, startNode)
 
     iterationsCounter = 0
-    maxIterations = (len(map[0]) * len(map) // 2)
+    maxIterations = len(map[0]) * len(map)
 
     while len(notVisitedNodes) > 0:
         iterationsCounter += 1
@@ -37,24 +36,7 @@ def a_estrela(map: [[int]], start, end):
         if successTest(currentNode, endNode):
             return returnPath(currentNode)
 
-        children = []
-        moviments = [(0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]
-        for newPosition in moviments:
-
-            currentNodePosition = (
-                currentNode.position[0] + newPosition[0], currentNode.position[1] + newPosition[1])
-
-            if currentNodePosition[0] > (len(map) - 1) or currentNodePosition[0] < 0 or currentNodePosition[1] > (len(map[len(map)-1]) - 1) or currentNodePosition[1] < 0:
-                continue
-
-            terrain = map[currentNodePosition[0]][currentNodePosition[1]]
-
-            if terrain == Terreno.BARREIRA.value:
-                continue
-
-            cost = getCost(terrain)
-            newChildNode = Node(currentNode, currentNodePosition, cost)
-            children.append(newChildNode)
+        children = generateChildren(currentNode, map)
 
         for child in children:
 
