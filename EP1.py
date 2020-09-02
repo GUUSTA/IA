@@ -3,7 +3,7 @@ from map import Map
 from A_Star import a_estrela
 
 
-class ep1:
+class EP1:
 
     map: Map
 
@@ -14,15 +14,5 @@ class ep1:
 
     def gerarSucessores(self):
         return
-
-    def testeSucesso(self):
-        # return self.estadoAtual == self.estadoFinal
-        return
-
-    def heuristica(self, p1, p2):
-        a = math.pow((p2.x - p1.x), 2) + math.pow((p2.y - p1.y), 2)
-        b = math.sqrt(a)
-        return b
-
-
-ep = ep1(10, 10)
+        
+ep = EP1(10, 10)

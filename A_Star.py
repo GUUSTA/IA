@@ -1,17 +1,17 @@
-from Aux import Node, Terreno, custo
-import heapq
+from Aux import Node, Terreno, getCost, getHeuristic, successTest
+import heapq, math
 
 
-def return_path(currentNode):
+def returnPath(currentNode):
     path = []
     current = currentNode
     while current is not None:
         path.append(current.position)
         current = current.parent
-    return path[::-1]  # Return reversed path
+    return path[::-1]
 
 
-def a_estrela(maze: [[int]], start, end):
+def a_estrela(map: [[int]], start, end):
 
     startNode = Node(None, start, 0)
     endNode = Node(None, end, 1)
@@ -22,39 +22,37 @@ def a_estrela(maze: [[int]], start, end):
     heapq.heapify(notVisitedNodes)
     heapq.heappush(notVisitedNodes, startNode)
 
-    outerIterations = 0
-    maxIterations = (len(maze[0]) * len(maze) // 2)
+    iterationsCounter = 0
+    maxIterations = (len(map[0]) * len(map) // 2)
 
     while len(notVisitedNodes) > 0:
-        outerIterations += 1
-        if outerIterations > maxIterations:
-            print("N foi possivel, muitas iteracoes")
-            return return_path(notVisitedNodes[0])
+        iterationsCounter += 1
+        if iterationsCounter > maxIterations:
+            print("Não foi possivel, muitas iteracoes")
+            return returnPath(notVisitedNodes[0])
 
         currentNode = heapq.heappop(notVisitedNodes)
         visitedNodes.append(currentNode)
 
-        if currentNode == endNode:
-            print("SOLUCAO")
-            return return_path(currentNode)
+        if successTest(currentNode, endNode):
+            return returnPath(currentNode)
 
         children = []
-
         moviments = [(0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]
         for newPosition in moviments:
 
             currentNodePosition = (
                 currentNode.position[0] + newPosition[0], currentNode.position[1] + newPosition[1])
 
-            if currentNodePosition[0] > (len(maze) - 1) or currentNodePosition[0] < 0 or currentNodePosition[1] > (len(maze[len(maze)-1]) - 1) or currentNodePosition[1] < 0:
+            if currentNodePosition[0] > (len(map) - 1) or currentNodePosition[0] < 0 or currentNodePosition[1] > (len(map[len(map)-1]) - 1) or currentNodePosition[1] < 0:
                 continue
 
-            terrain = maze[currentNodePosition[0]][currentNodePosition[1]]
+            terrain = map[currentNodePosition[0]][currentNodePosition[1]]
 
             if terrain == Terreno.BARREIRA.value:
                 continue
 
-            cost = custo(terrain)
+            cost = getCost(terrain)
             newChildNode = Node(currentNode, currentNodePosition, cost)
             children.append(newChildNode)
 
@@ -68,8 +66,7 @@ def a_estrela(maze: [[int]], start, end):
                 continue
 
             child.g = currentNode.g + child.cost
-            child.h = ((child.position[0] - endNode.position[0]) **
-                       2) + ((child.position[1] - endNode.position[1]) ** 2)
+            child.h = getHeuristic(child, endNode) 
             child.f = child.g + child.h
 
             childCount = 0

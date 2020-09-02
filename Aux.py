@@ -1,6 +1,5 @@
 from enum import Enum
-import heapq
-
+import heapq, math
 
 class Terreno(Enum):
     INICIO = 0
@@ -29,7 +28,7 @@ class Node:
     def __gt__(self, other):
         return self.f > other.f
 
-def custo(value):
+def getCost(value):
     if value == Terreno.INICIO.value:
         return 0
     elif value == Terreno.TERRA.value:
@@ -40,3 +39,11 @@ def custo(value):
         return 6
     elif value == Terreno.FINAL.value:
         return 1
+
+def getHeuristic(currentNode: Node, endNode: Node):
+    c = math.pow((currentNode.position[0] - endNode.position[0]), 2) + math.pow((currentNode.position[1] - endNode.position[1]), 2)
+    h = math.sqrt(c)
+    return h
+
+def successTest(currentNode, endNode):
+    return currentNode == endNode
