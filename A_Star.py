@@ -10,8 +10,9 @@ def return_path(currentNode):
         current = current.parent
     return path[::-1]  # Return reversed path
 
-def a_estrela(maze, start: Ponto, end: Ponto):
-    
+def a_estrela(maze: [[int]], start, end):
+    noRows = len(maze)
+    noColumns = len(maze[0])
     startNode = Node(None, start, 0)
     endNode = Node(None, end, 1)
 
@@ -24,18 +25,10 @@ def a_estrela(maze, start: Ponto, end: Ponto):
     outerIterations = 0
     maxIterations = (len(maze[0]) * len(maze) // 2)
 
-    moviments = ((0, -1), 
-                 (0, 1), 
-                 (-1, 0), 
-                 (1, 0), 
-                 (-1, -1),
-                 (-1, 1),
-                 (1, -1),
-                 (1, 1))
+    moviments = ((0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1))
 
     while len(notVisitedNodes) > 0:
         outerIterations += 1
-
         if outerIterations > maxIterations:
             print("giving up on pathfinding too many iterations")
             return return_path(notVisitedNodes[0])
@@ -44,8 +37,7 @@ def a_estrela(maze, start: Ponto, end: Ponto):
         visitedNodes.append(currentNode)
 
         if currentNode == endNode:
-            print(visitedNodes)
-            print(notVisitedNodes)
+            print("SOLUCAO")
             return return_path(currentNode)
         
         children = []
@@ -57,9 +49,8 @@ def a_estrela(maze, start: Ponto, end: Ponto):
             if currentNodePosition[0] > (len(maze) - 1) or currentNodePosition[0] < 0 or currentNodePosition[1] > (len(maze[len(maze)-1]) - 1) or currentNodePosition[1] < 0:
                 continue
 
-            if maze[currentNodePosition[0]][currentNodePosition[1]] != Terreno.BARREIRA.value:
+            if maze[currentNodePosition[0]][currentNodePosition[1]] == Terreno.BARREIRA.value:
                 continue
-
             terrain = maze[currentNodePosition[0]][currentNodePosition[1]]
             cost = 0
             if terrain == Terreno.INICIO.value:
@@ -74,7 +65,6 @@ def a_estrela(maze, start: Ponto, end: Ponto):
                 cost = 99
             elif terrain == Terreno.FINAL.value:
                 cost = 1
-            print(cost)
             newChildNode = Node(currentNode, currentNodePosition, cost)
             children.append(newChildNode)
 

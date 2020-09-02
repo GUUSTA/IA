@@ -16,9 +16,9 @@ class ep1:
 
     def __init__(self, rangeX, rangeY):
         self.map = Map(rangeX, rangeY)
-        self.estadoAtual = Ponto(rangeX - 1, 0, Terreno.INICIO)
-        self.estadoFinal = Ponto(0, rangeY - 1, Terreno.FINAL)
-        path = a_estrela(self.map.map, (self.estadoAtual.x, self.estadoAtual.y), (self.estadoFinal.x, self.estadoFinal.y))
+        self.estadoAtual = Ponto(rangeX, 0, Terreno.INICIO)
+        self.estadoFinal = Ponto(0, rangeY, Terreno.FINAL)
+        path = a_estrela(self.map.map, (self.estadoAtual.x - 1, self.estadoAtual.y), (self.estadoFinal.x, self.estadoFinal.y - 1))
         
         print(path)
 
@@ -83,9 +83,4 @@ class ep1:
         return ("↙️")
 
 
-ep = ep1(6, 6)
-
-
-# p1 = Ponto(1, 2, Terreno.AGUA)
-# p2 = Ponto(1, 2, Terreno.AREIA)
-# print(ep.distEuclidiana(p1, p2))
+ep = ep1(3, 6)
