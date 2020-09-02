@@ -1,5 +1,6 @@
-from Aux import Node, Terreno
+from Aux import Node, Terreno, custo
 import heapq
+
 
 def return_path(currentNode):
     path = []
@@ -9,8 +10,9 @@ def return_path(currentNode):
         current = current.parent
     return path[::-1]  # Return reversed path
 
+
 def a_estrela(maze: [[int]], start, end):
-    
+
     startNode = Node(None, start, 0)
     endNode = Node(None, end, 1)
 
@@ -23,46 +25,38 @@ def a_estrela(maze: [[int]], start, end):
     outerIterations = 0
     maxIterations = (len(maze[0]) * len(maze) // 2)
 
-    moviments = ((0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1))
+    moviments = ((0, -1), (0, 1), (-1, 0), (1, 0),
+                 (-1, -1), (-1, 1), (1, -1), (1, 1))
 
     while len(notVisitedNodes) > 0:
         outerIterations += 1
         if outerIterations > maxIterations:
             print("giving up on pathfinding too many iterations")
             return return_path(notVisitedNodes[0])
-        
+
         currentNode = heapq.heappop(notVisitedNodes)
         visitedNodes.append(currentNode)
 
         if currentNode == endNode:
             print("SOLUCAO")
             return return_path(currentNode)
-        
+
         children = []
 
         for newPosition in moviments:
 
-            currentNodePosition = (currentNode.position[0] + newPosition[0], currentNode.position[1] + newPosition[1])
+            currentNodePosition = (
+                currentNode.position[0] + newPosition[0], currentNode.position[1] + newPosition[1])
 
             if currentNodePosition[0] > (len(maze) - 1) or currentNodePosition[0] < 0 or currentNodePosition[1] > (len(maze[len(maze)-1]) - 1) or currentNodePosition[1] < 0:
                 continue
 
-            if maze[currentNodePosition[0]][currentNodePosition[1]] == Terreno.BARREIRA.value:
-                continue
             terrain = maze[currentNodePosition[0]][currentNodePosition[1]]
-            cost = 0
-            if terrain == Terreno.INICIO.value:
-                cost = 0
-            elif terrain == Terreno.TERRA.value:
-                cost = 1
-            elif terrain == Terreno.AGUA.value:
-                cost = 3
-            elif terrain == Terreno.AREIA.value:
-                cost = 6
-            elif terrain == Terreno.BARREIRA.value:
-                cost = 99
-            elif terrain == Terreno.FINAL.value:
-                cost = 1
+
+            if terrain == Terreno.BARREIRA.value:
+                continue
+
+            cost = custo(terrain)
             newChildNode = Node(currentNode, currentNodePosition, cost)
             children.append(newChildNode)
 
@@ -72,13 +66,13 @@ def a_estrela(maze: [[int]], start, end):
 
             # count = 0
             # for visitedChild in visitedNodes:
-            #     if visitedChild == child: 
+            #     if visitedChild == child:
             #         count += 1
             # if count > 0:
             #     continue
 
             if len([closed_child for closed_child in visitedNodes if closed_child == child]) > 0:
-               continue
+                continue
 
             # Create the f, g, and h values
             child.g = currentNode.g + child.cost
@@ -95,4 +89,3 @@ def a_estrela(maze: [[int]], start, end):
 
     print("N foi possivel achar um caminho")
     return None
-    

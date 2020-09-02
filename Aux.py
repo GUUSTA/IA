@@ -1,6 +1,7 @@
 from enum import Enum
 import heapq
 
+
 class Terreno(Enum):
     INICIO = 0
     TERRA = 1
@@ -8,6 +9,7 @@ class Terreno(Enum):
     AREIA = 3
     BARREIRA = 4
     FINAL = 5
+
 
 class Node:
     def __init__(self, parent=None, position=None, cost=None):
@@ -26,3 +28,16 @@ class Node:
 
     def __gt__(self, other):
         return self.f > other.f
+
+
+def custo(value):
+    if value == Terreno.INICIO.value:
+        return 0
+    elif value == Terreno.TERRA.value:
+        return 1
+    elif value == Terreno.AGUA.value:
+        return 3
+    elif value == Terreno.AREIA.value:
+        return 6
+    elif value == Terreno.FINAL.value:
+        return 1

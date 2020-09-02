@@ -2,6 +2,7 @@ from Aux import Terreno
 from map import Map
 from A_Star import a_estrela
 
+
 class ep1:
 
     map: Map
@@ -23,21 +24,5 @@ class ep1:
         b = math.sqrt(a)
         return b
 
-    def custo(self, movimentos: []):
-        custoTotal = 0
-        for movimento in movimentos:
-            if movimento == Terreno.TERRA:
-                custoTotal += 1
-            elif movimento == Terreno.AGUA:
-                custoTotal += 3
-            elif movimento == Terreno.AREIA:
-                custoTotal += 6
-            elif movimento == Terreno.BARREIRA:
-                custoTotal += 999
-            elif movimento == Terreno.FINAL:
-                custoTotal += 1
-            elif movimento == Terreno.INICIO:
-                custoTotal += 0
-        return custoTotal
 
 ep = ep1(3, 6)
