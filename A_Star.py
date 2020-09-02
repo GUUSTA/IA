@@ -1,5 +1,4 @@
-##from treeNodes import No
-from Aux import Node, Ponto, Terreno#imprime_atual, imprime_sucessores
+from Aux import Node, Terreno
 import heapq
 
 def return_path(currentNode):
@@ -11,8 +10,7 @@ def return_path(currentNode):
     return path[::-1]  # Return reversed path
 
 def a_estrela(maze: [[int]], start, end):
-    noRows = len(maze)
-    noColumns = len(maze[0])
+    
     startNode = Node(None, start, 0)
     endNode = Node(None, end, 1)
 
