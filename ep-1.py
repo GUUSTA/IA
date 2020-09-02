@@ -40,4 +40,4 @@ class ep1:
                 custoTotal += 0
         return custoTotal
 
-ep = ep1(3, 6)
+ep = ep1(10, 10)

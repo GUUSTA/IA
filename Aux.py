@@ -26,3 +26,4 @@ class Node:
 
     def __gt__(self, other):
         return self.f > other.f
+
