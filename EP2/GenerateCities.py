@@ -213,8 +213,7 @@ def createGranada():
     city11 = Movementation(Cities.PonteDoSol, 7, 1036)
     city12 = Movementation(Cities.Porto, 3, 237)
     city13 = Movementation(Cities.Limoes, 4, 444)
-    granada.movementations.append(
-        city10, city11, city12, city13)
+    granada.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
     return
 
 
@@ -233,8 +232,7 @@ def createLagos():
     city11 = Movementation(Cities.PonteDoSol, 1, 130)
     city12 = Movementation(Cities.Porto, 10, 180)
     city13 = Movementation(Cities.Limoes, 8, 952)
-    lagos.movementations.append(
-        city11, city12, city13)
+    lagos.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
     return
 
 
@@ -253,8 +251,7 @@ def createPonteDoSol():
     city11 = Movementation(Cities.Lagos, 1, 130)
     city12 = Movementation(Cities.Porto, 10, 1020)
     city13 = Movementation(Cities.Limoes, 9, 558)
-    ponteDoSol.movementations.append(
-        city12, city13)
+    ponteDoSol.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
     return
 
 
@@ -273,7 +270,7 @@ def createPorto():
     city11 = Movementation(Cities.Lagos, 10, 180)
     city12 = Movementation(Cities.PonteDoSol, 10, 1020)
     city13 = Movementation(Cities.Limoes, 9, 513)
-    porto.movementations.append(city13)
+    porto.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
     return
 
 
@@ -292,6 +289,5 @@ def createLimoes():
     city11 = Movementation(Cities.Lagos, 8, 952)
     city12 = Movementation(Cities.PonteDoSol, 9, 558)
     city13 = Movementation(Cities.Porto, 9, 513)
-    limoes.movementations.append(
-        city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    limoes.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
     return
