@@ -1,4 +1,4 @@
-from City import City
+import City
 
 class Movementation:
 

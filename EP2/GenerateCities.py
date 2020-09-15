@@ -1,10 +1,9 @@
-from Movimentation import Movementation
 from City import City
+from Movementation import Movementation
 from enum import Enum
 
-
 class Cities(Enum):
-    Escondidos = City("Escondidos", 10, 10000, 5, "Coroa do Rei João II", [])
+    Escondidos = City("Escondidos", 0, 0, 0, "", [])
     SantaPaula = City("Santa Paula", 10, 10000, 5, "Coroa do Rei João II", [])
     Campos = City("Campos", 5, 6500, 6, "Espada sagrada", [])
     RiachoDeFevereiro = City("Riacho de Fevereiro", 6, 7000, 2, "Calice do Sto. Graal", [])
@@ -19,9 +18,15 @@ class Cities(Enum):
     Porto = City("Porto", 2, 2300, 1, "Flecha do cacador pré-histórico", [])
     Limoes = City("Limoes", 4, 4000, 2, "Capacete de guerra antigo", [])
 
+def generateCities():
+    cities = []
+    cities.extend((createEscondidos(), createSantaPaula(), createCampos(), createRiacho(), createAlgas(), createAlemDoMar(),
+                    createGuardiao(), createFozAguaQuente(), createLeao(), createGranada(), createLagos(), createPonteDoSol(),
+                    createPorto(), createLimoes()))
+    return cities
 
 def createEscondidos():
-    escondidos = Cities.Escondidos.value
+    escondidos = City("Escondidos", 0, 0, 0, "", [])
     city1 = Movementation(Cities.SantaPaula, 6, 780)
     city2 = Movementation(Cities.Campos, 5, 350)
     city3 = Movementation(Cities.RiachoDeFevereiro, 1, 65)
@@ -35,11 +40,11 @@ def createEscondidos():
     city11 = Movementation(Cities.PonteDoSol, 9, 504)
     city12 = Movementation(Cities.Porto, 6, 624)
     city13 = Movementation(Cities.Limoes, 3, 261)
-    escondidos.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    escondidos.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return escondidos
 
 def createSantaPaula():
-    stPaula = Cities.SantaPaula.value
+    stPaula = City("Santa Paula", 10, 10000, 5, "Coroa do Rei João II", [])
     city1 = Movementation(Cities.Escondidos, 6, 780)
     city2 = Movementation(Cities.Campos, 4, 404)
     city3 = Movementation(Cities.RiachoDeFevereiro, 8, 1192)
@@ -53,12 +58,12 @@ def createSantaPaula():
     city11 = Movementation(Cities.PonteDoSol, 3, 390)
     city12 = Movementation(Cities.Porto, 4, 320)
     city13 = Movementation(Cities.Limoes, 10, 850)
-    stPaula.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    stPaula.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return stPaula
 
 
 def createCampos():
-    campos = Cities.Campos.value
+    campos = City("Campos", 5, 6500, 6, "Espada sagrada", [])
     city1 = Movementation(Cities.Escondidos, 5, 350)
     city2 = Movementation(Cities.SantaPaula, 4, 404)
     city3 = Movementation(Cities.RiachoDeFevereiro, 6, 828)
@@ -72,12 +77,12 @@ def createCampos():
     city11 = Movementation(Cities.PonteDoSol, 2, 252)
     city12 = Movementation(Cities.Porto, 9, 1017)
     city13 = Movementation(Cities.Limoes, 8, 1200)
-    campos.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    campos.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return campos
 
 
 def createRiacho():
-    riachoFevereiro = Cities.RiachoDeFevereiro.value
+    riachoFevereiro = City("Riacho de Fevereiro", 6, 7000, 2, "Calice do Sto. Graal", [])
     city1 = Movementation(Cities.Escondidos, 1, 65)
     city2 = Movementation(Cities.SantaPaula, 8, 1192)
     city3 = Movementation(Cities.Campos, 6, 828)
@@ -91,12 +96,12 @@ def createRiacho():
     city11 = Movementation(Cities.PonteDoSol, 7, 931)
     city12 = Movementation(Cities.Porto, 2, 160)
     city13 = Movementation(Cities.Limoes, 5, 330)
-    riachoFevereiro.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    riachoFevereiro.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return riachoFevereiro
 
 
 def createAlgas():
-    algas = Cities.Algas.value
+    algas = City("Algas", 7, 2500, 1, "Colar da desamento da Raiva Vanessa IV", [])
     city1 = Movementation(Cities.Escondidos, 7, 658)
     city2 = Movementation(Cities.SantaPaula, 5, 370)
     city3 = Movementation(Cities.Campos, 3, 369)
@@ -110,12 +115,12 @@ def createAlgas():
     city11 = Movementation(Cities.PonteDoSol, 5, 320)
     city12 = Movementation(Cities.Porto, 6, 546)
     city13 = Movementation(Cities.Limoes, 3, 432)
-    algas.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    algas.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return algas
 
 
 def createAlemDoMar():
-    alemDoMar = Cities.AlemDoMar.value
+    alemDoMar = City("Alem do Mar", 10, 5400, 2, "Maior diamante do continente", [])
     city1 = Movementation(Cities.Escondidos, 5, 535)
     city2 = Movementation(Cities.SantaPaula, 6, 780)
     city3 = Movementation(Cities.Campos, 2, 118)
@@ -129,12 +134,12 @@ def createAlemDoMar():
     city11 = Movementation(Cities.PonteDoSol, 4, 332)
     city12 = Movementation(Cities.Porto, 7, 763)
     city13 = Movementation(Cities.Limoes, 5, 645)
-    alemDoMar.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    alemDoMar.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return alemDoMar
 
 
 def createGuardiao():
-    guardiao = Cities.Guardiao.value
+    guardiao = City("Guardiao", 2, 3000, 1, "Primeira edicao do o livro azul", [])
     city1 = Movementation(Cities.Escondidos, 6, 840)
     city2 = Movementation(Cities.SantaPaula, 10, 750)
     city3 = Movementation(Cities.Campos, 8, 944)
@@ -148,12 +153,12 @@ def createGuardiao():
     city11 = Movementation(Cities.PonteDoSol, 1, 74)
     city12 = Movementation(Cities.Porto, 7, 455)
     city13 = Movementation(Cities.Limoes, 8, 1088)
-    guardiao.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    guardiao.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return guardiao
 
 
 def createFozAguaQuente():
-    fozAguaQuente = Cities.FozDaAguaQuente.value
+    fozAguaQuente = City("Foz da Agua Quente", 4, 2000, 4, "Quadro do maior pintor do século", [])
     city1 = Movementation(Cities.Escondidos, 5, 440)
     city2 = Movementation(Cities.SantaPaula, 3, 390)
     city3 = Movementation(Cities.Campos, 5, 610)
@@ -167,12 +172,12 @@ def createFozAguaQuente():
     city11 = Movementation(Cities.PonteDoSol, 3, 408)
     city12 = Movementation(Cities.Porto, 4, 576)
     city13 = Movementation(Cities.Limoes, 1, 143)
-    fozAguaQuente.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    fozAguaQuente.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return fozAguaQuente
 
 
 def createLeao():
-    leao = Cities.Leao.value
+    leao = City("Leao", 5, 4000, 2, "Taca da copa do mundo de corria de cavalo", [])
     city1 = Movementation(Cities.Leao, 3, 186)
     city2 = Movementation(Cities.SantaPaula, 10, 830)
     city3 = Movementation(Cities.Campos, 3, 234)
@@ -186,12 +191,12 @@ def createLeao():
     city11 = Movementation(Cities.PonteDoSol, 3, 168)
     city12 = Movementation(Cities.Porto, 10, 800)
     city13 = Movementation(Cities.Limoes, 9, 846)
-    leao.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    leao.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return leao
 
 
 def createGranada():
-    granada = Cities.Granada.value
+    granada = City("Granada", 1, 2500, 2, "Fossil da primeira galinha conhecida", [])
     city1 = Movementation(Cities.Escondidos, 7, 413)
     city2 = Movementation(Cities.SantaPaula, 4, 248)
     city3 = Movementation(Cities.Campos, 2, 294)
@@ -205,12 +210,12 @@ def createGranada():
     city11 = Movementation(Cities.PonteDoSol, 7, 1036)
     city12 = Movementation(Cities.Porto, 3, 237)
     city13 = Movementation(Cities.Limoes, 4, 444)
-    granada.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    granada.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return granada
 
 
 def createLagos():
-    lagos = Cities.Lagos.value
+    lagos = City("Lagos", 7, 3000, 1, "Primeira moeda de 1 do pais", [])
     city1 = Movementation(Cities.Escondidos, 5, 675)
     city2 = Movementation(Cities.SantaPaula, 8, 512)
     city3 = Movementation(Cities.Campos, 2, 168)
@@ -224,12 +229,12 @@ def createLagos():
     city11 = Movementation(Cities.PonteDoSol, 1, 130)
     city12 = Movementation(Cities.Porto, 10, 180)
     city13 = Movementation(Cities.Limoes, 8, 952)
-    lagos.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    lagos.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return lagos
 
 
 def createPonteDoSol():
-    ponteDoSol = Cities.PonteDoSol.value
+    ponteDoSol = City("Ponte do Sol", 5, 1500, 6, "Busto do lider da revolucao pavao", [])
     city1 = Movementation(Cities.Escondidos, 9, 504)
     city2 = Movementation(Cities.SantaPaula, 3, 390)
     city3 = Movementation(Cities.Campos, 2, 252)
@@ -243,12 +248,12 @@ def createPonteDoSol():
     city11 = Movementation(Cities.Lagos, 1, 130)
     city12 = Movementation(Cities.Porto, 10, 1020)
     city13 = Movementation(Cities.Limoes, 9, 558)
-    ponteDoSol.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    ponteDoSol.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return ponteDoSol
 
 
 def createPorto():
-    porto = Cities.Porto.value
+    porto = City("Porto", 2, 2300, 1, "Flecha do cacador pré-histórico", [])
     city1 = Movementation(Cities.Escondidos, 6, 624)
     city2 = Movementation(Cities.SantaPaula, 4, 320)
     city3 = Movementation(Cities.Campos, 9, 1017)
@@ -262,12 +267,12 @@ def createPorto():
     city11 = Movementation(Cities.Lagos, 10, 180)
     city12 = Movementation(Cities.PonteDoSol, 10, 1020)
     city13 = Movementation(Cities.Limoes, 9, 513)
-    porto.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    porto.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return porto
 
 
 def createLimoes():
-    limoes = Cities.Limoes.value
+    limoes = City("Limoes", 4, 4000, 2, "Capacete de guerra antigo", [])
     city1 = Movementation(Cities.Escondidos, 3, 261)
     city2 = Movementation(Cities.SantaPaula, 10, 850)
     city3 = Movementation(Cities.Campos, 8, 1200)
@@ -281,5 +286,7 @@ def createLimoes():
     city11 = Movementation(Cities.Lagos, 8, 952)
     city12 = Movementation(Cities.PonteDoSol, 9, 558)
     city13 = Movementation(Cities.Porto, 9, 513)
-    limoes.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
+    limoes.movementations.append([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13])
     return limoes
+
+generateCities()
