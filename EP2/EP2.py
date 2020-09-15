@@ -17,30 +17,18 @@ class EP2:
     
     def generateInitialPopulation(self):
         self.firstPopulation = [[random.choice(self.cities) for y in range(4)] for x in range(19)]
-        # self.firstPopulation = [[ Path().path.apend(random.choice(self.cities)) for y in range(4)] for x in range(19)]
+        self.paths = [Path() for y in range(19)]
 
-        for l in range(0, len(self.firstPopulation)):
+        for l in range(19):
             newPath = Path()
-            newPath.path = []
-            for c in range(0, len(self.firstPopulation[l])):
-                newPath.path.append(self.firstPopulation[l][c].name)
-        self.paths[l] = newPath
-        
-        # print(newPath.path)
-
-        # print(self.paths[0])
-        # for i in range(len(self.firstPopulation)):
-        #     newPath = Path()
-        #     newPath.path = [self.firstPopulation[i][y] for y in range(4)]
-        #     print(newPath.path[0].name)
-        #     self.paths.append(newPath)   
-        
-        # print(self.paths[0].path[0].)
-        # for i in range(len(self.firstPopulation[0])):
-        #     print(self.firstPopulation[0][i].name)
+            for c in range(4):
+                newPath.path.append(self.firstPopulation[l][c])
+            self.paths[l] = newPath
         return
     
     def fitness(self):
+        # TODO: Fazer a funcao de fitness de cada caminho
+        #       Fazer o totalTravelTime, e outros atributos do Caminho
         return
 
     def selectCrossOverIndividuals(self):

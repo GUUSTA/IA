@@ -16,3 +16,9 @@ class Path:
         self.totalTime = totalTime
         self.totalProfit = totalProfit
         self.totalWeight = totalWeight
+
+    def getFitness(self):
+        return
+
+    # Fazer as outras funcoes
+        
