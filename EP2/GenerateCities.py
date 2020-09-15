@@ -7,23 +7,15 @@ class Cities(Enum):
     Escondidos = City("Escondidos", 10, 10000, 5, "Coroa do Rei João II", [])
     SantaPaula = City("Santa Paula", 10, 10000, 5, "Coroa do Rei João II", [])
     Campos = City("Campos", 5, 6500, 6, "Espada sagrada", [])
-    RiachoDeFevereiro = City("Riacho de Fevereiro", 6,
-                             7000, 2, "Calice do Sto. Graal", [])
-    Algas = City("Algas", 7, 2500, 1,
-                 "Colar da desamento da Raiva Vanessa IV", [])
-    AlemDoMar = City("Alem do Mar", 10, 5400, 2,
-                     "Maior diamante do continente", [])
-    Guardiao = City("Guardiao", 2, 3000, 1,
-                    "Primeira edicao do o livro azul", [])
-    FozDaAguaQuente = City("Foz da Agua Quente", 4, 2000,
-                           4, "Quadro do maior pintor do século", [])
-    Leao = City("Leao", 5, 4000, 2,
-                "Taca da copa do mundo de corria de cavalo", [])
-    Granada = City("Granada", 1, 2500, 2,
-                   "Fossil da primeira galinha conhecida", [])
+    RiachoDeFevereiro = City("Riacho de Fevereiro", 6, 7000, 2, "Calice do Sto. Graal", [])
+    Algas = City("Algas", 7, 2500, 1, "Colar da desamento da Raiva Vanessa IV", [])
+    AlemDoMar = City("Alem do Mar", 10, 5400, 2, "Maior diamante do continente", [])
+    Guardiao = City("Guardiao", 2, 3000, 1, "Primeira edicao do o livro azul", [])
+    FozDaAguaQuente = City("Foz da Agua Quente", 4, 2000, 4, "Quadro do maior pintor do século", [])
+    Leao = City("Leao", 5, 4000, 2, "Taca da copa do mundo de corria de cavalo", [])
+    Granada = City("Granada", 1, 2500, 2, "Fossil da primeira galinha conhecida", [])
     Lagos = City("Lagos", 7, 3000, 1, "Primeira moeda de 1 do pais", [])
-    PonteDoSol = City("Ponte do Sol", 5, 1500, 6,
-                      "Busto do lider da revolucao pavao", [])
+    PonteDoSol = City("Ponte do Sol", 5, 1500, 6, "Busto do lider da revolucao pavao", [])
     Porto = City("Porto", 2, 2300, 1, "Flecha do cacador pré-histórico", [])
     Limoes = City("Limoes", 4, 4000, 2, "Capacete de guerra antigo", [])
 
@@ -119,7 +111,7 @@ def createAlgas():
     city12 = Movementation(Cities.Porto, 6, 546)
     city13 = Movementation(Cities.Limoes, 3, 432)
     algas.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return algas
 
 
 def createAlemDoMar():
@@ -138,7 +130,7 @@ def createAlemDoMar():
     city12 = Movementation(Cities.Porto, 7, 763)
     city13 = Movementation(Cities.Limoes, 5, 645)
     alemDoMar.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return alemDoMar
 
 
 def createGuardiao():
@@ -157,7 +149,7 @@ def createGuardiao():
     city12 = Movementation(Cities.Porto, 7, 455)
     city13 = Movementation(Cities.Limoes, 8, 1088)
     guardiao.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return guardiao
 
 
 def createFozAguaQuente():
@@ -176,7 +168,7 @@ def createFozAguaQuente():
     city12 = Movementation(Cities.Porto, 4, 576)
     city13 = Movementation(Cities.Limoes, 1, 143)
     fozAguaQuente.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return fozAguaQuente
 
 
 def createLeao():
@@ -195,7 +187,7 @@ def createLeao():
     city12 = Movementation(Cities.Porto, 10, 800)
     city13 = Movementation(Cities.Limoes, 9, 846)
     leao.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return leao
 
 
 def createGranada():
@@ -214,7 +206,7 @@ def createGranada():
     city12 = Movementation(Cities.Porto, 3, 237)
     city13 = Movementation(Cities.Limoes, 4, 444)
     granada.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return granada
 
 
 def createLagos():
@@ -233,7 +225,7 @@ def createLagos():
     city12 = Movementation(Cities.Porto, 10, 180)
     city13 = Movementation(Cities.Limoes, 8, 952)
     lagos.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return lagos
 
 
 def createPonteDoSol():
@@ -252,7 +244,7 @@ def createPonteDoSol():
     city12 = Movementation(Cities.Porto, 10, 1020)
     city13 = Movementation(Cities.Limoes, 9, 558)
     ponteDoSol.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return ponteDoSol
 
 
 def createPorto():
@@ -271,7 +263,7 @@ def createPorto():
     city12 = Movementation(Cities.PonteDoSol, 10, 1020)
     city13 = Movementation(Cities.Limoes, 9, 513)
     porto.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return porto
 
 
 def createLimoes():
@@ -290,4 +282,4 @@ def createLimoes():
     city12 = Movementation(Cities.PonteDoSol, 9, 558)
     city13 = Movementation(Cities.Porto, 9, 513)
     limoes.movementations.append(city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
-    return
+    return limoes
