@@ -172,7 +172,16 @@ def createLeao():
 
 
 def createGranada():
-    granada = Cities.Granada
+    granada = Cities.Granada.value
+    city1 = Movementation(Cities.Escondidos, 7, 413)
+    city2 = Movementation(Cities.SantaPaula, 4, 248)
+    city3 = Movementation(Cities.Campos, 2, 294)
+    city4 = Movementation(Cities.RiachoDeFevereiro, 8, 856)
+    city5 = Movementation(Cities.Algas, 8, 1192)
+    city6 = Movementation(Cities.AlemDoMar, 6, 582)
+    city7 = Movementation(Cities.Guardiao, 10, 680)
+    city8 = Movementation(Cities.FozDaAguaQuente, 7, 378)
+    city9 = Movementation(Cities.Leao, 1, 122)
     city10 = Movementation(Cities.Lagos, 2, 174)
     city11 = Movementation(Cities.PonteDoSol, 7, 1036)
     city12 = Movementation(Cities.Porto, 3, 237)
@@ -183,7 +192,17 @@ def createGranada():
 
 
 def createLagos():
-    lagos = Cities.Lagos
+    lagos = Cities.Lagos.value
+    city1 = Movementation(Cities.Escondidos, 5, 675)
+    city2 = Movementation(Cities.SantaPaula, 8, 512)
+    city3 = Movementation(Cities.Campos, 2, 168)
+    city4 = Movementation(Cities.RiachoDeFevereiro, 3, 201)
+    city5 = Movementation(Cities.Algas, 3, 435)
+    city6 = Movementation(Cities.AlemDoMar, 1, 147)
+    city7 = Movementation(Cities.Guardiao, 9, 603)
+    city8 = Movementation(Cities.FozDaAguaQuente, 6, 762)
+    city9 = Movementation(Cities.Leao, 1, 147)
+    city10 = Movementation(Cities.Granada, 2, 174)
     city11 = Movementation(Cities.PonteDoSol, 1, 130)
     city12 = Movementation(Cities.Porto, 10, 180)
     city13 = Movementation(Cities.Limoes, 8, 952)
@@ -193,7 +212,18 @@ def createLagos():
 
 
 def createPonteDoSol():
-    ponteDoSol = Cities.PonteDoSol
+    ponteDoSol = Cities.PonteDoSol.value
+    city1 = Movementation(Cities.Escondidos, 9, 504)
+    city2 = Movementation(Cities.SantaPaula, 3, 390)
+    city3 = Movementation(Cities.Campos, 2, 252)
+    city4 = Movementation(Cities.RiachoDeFevereiro, 7, 931)
+    city5 = Movementation(Cities.Algas, 5, 320)
+    city6 = Movementation(Cities.AlemDoMar, 4, 332)
+    city7 = Movementation(Cities.Guardiao, 1, 74)
+    city8 = Movementation(Cities.FozDaAguaQuente, 3, 408)
+    city9 = Movementation(Cities.Leao, 3, 168)
+    city10 = Movementation(Cities.Granada, 7, 1036)
+    city11 = Movementation(Cities.Lagos, 1, 130)
     city12 = Movementation(Cities.Porto, 10, 1020)
     city13 = Movementation(Cities.Limoes, 9, 558)
     ponteDoSol.movementations.append(
@@ -202,12 +232,39 @@ def createPonteDoSol():
 
 
 def createPorto():
-    porto = Cities.Porto
+    porto = Cities.Porto.value
+    city1 = Movementation(Cities.Escondidos, 6, 624)
+    city2 = Movementation(Cities.SantaPaula, 4, 320)
+    city3 = Movementation(Cities.Campos, 9, 1017)
+    city4 = Movementation(Cities.RiachoDeFevereiro, 2, 160)
+    city5 = Movementation(Cities.Algas, 6, 546)
+    city6 = Movementation(Cities.AlemDoMar, 7, 763)
+    city7 = Movementation(Cities.Guardiao, 7, 455)
+    city8 = Movementation(Cities.FozDaAguaQuente, 4, 576)
+    city9 = Movementation(Cities.Leao, 10, 800)
+    city10 = Movementation(Cities.Granada, 3, 237)
+    city11 = Movementation(Cities.Lagos, 10, 180)
+    city12 = Movementation(Cities.PonteDoSol, 10, 1020)
     city13 = Movementation(Cities.Limoes, 9, 513)
     porto.movementations.append(city13)
     return
 
 
 def createLimoes():
-    limoes = Cities.Limoes
+    limoes = Cities.Limoes.value
+    city1 = Movementation(Cities.Escondidos, 3, 261)
+    city2 = Movementation(Cities.SantaPaula, 10, 850)
+    city3 = Movementation(Cities.Campos, 8, 1200)
+    city4 = Movementation(Cities.RiachoDeFevereiro, 5, 330)
+    city5 = Movementation(Cities.Algas, 3, 432)
+    city6 = Movementation(Cities.AlemDoMar, 5, 645)
+    city7 = Movementation(Cities.Guardiao, 8, 1088)
+    city8 = Movementation(Cities.FozDaAguaQuente, 1, 143)
+    city9 = Movementation(Cities.Leao, 9, 846)
+    city10 = Movementation(Cities.Granada, 4, 444)
+    city11 = Movementation(Cities.Lagos, 8, 952)
+    city12 = Movementation(Cities.PonteDoSol, 9, 558)
+    city13 = Movementation(Cities.Porto, 9, 513)
+    limoes.movementations.append(
+        city1, city2, city3, city4, city5, city6, city7, city8, city9, city10, city11, city12, city13)
     return
