@@ -1,5 +1,6 @@
 import Movementation
 
+
 class City:
 
     name: str

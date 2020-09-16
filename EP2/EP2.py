@@ -3,6 +3,7 @@ from GenerateCities import generateCities
 from City import City
 from Movementation import Movementation
 from Path import Path
+from Aux import getMovimentation
 
 
 class EP2:
@@ -21,6 +22,10 @@ class EP2:
         random.seed()
         self.firstPopulation = [
             [random.choice(self.cities) for y in range(4)] for x in range(19)]
+
+        for i in range(19):
+            self.firstPopulation[i][0] = self.cities[0]
+
         self.paths = [Path() for y in range(19)]
 
         for l in range(19):
@@ -47,13 +52,17 @@ class EP2:
         for path in self.paths:
             fitnessValue = 0
             pathTravelCost = 0
-            pathTotalTime = 0  # No travel time nor sleep
+            pathTotalTime = 18  # No travel time nor sleep
             pathTotalProfit = 0
             pathTotalWeight = 0
-            for city in path.path:
-                pathTotalTime += city.robberyTime
+            for index, city in enumerate(path.path, start=1):
+                # movementation: [Movementation] = getMovimentation(
+                #     path.path[index - 1], city.movementations)
+                # pathTravelCost += movementation.cost
+                pathTotalTime += city.robberyTime  # + movementation.timeToArrive
                 pathTotalProfit += city.robberyProfit
                 pathTotalWeight += city.itemWeight
+
             # xath travel cost precisa de uma get movementation, para pegar o valor de dentro dos movimentos
             #pathTravelCost += path.p
 
@@ -87,6 +96,18 @@ class EP2:
 
     def checkSuccessCondition(self):
         return
+
+    def getMovimentation(self, city: City, movementation: [Movementation]):
+        # print(movementation[0].cost)
+        temp = [Movementation]
+        # temp[0].cost
+        for i in range(len(movementation)):
+            print(movementation[i])
+            temp.append(movementation[i])
+
+        for index in range(len(temp)):
+            if temp[index].city == city:
+                return temp
 
 
 ep2 = EP2()
