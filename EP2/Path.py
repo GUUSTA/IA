@@ -10,7 +10,7 @@ class Path:
     totalProfit: int
     totalWeight: int
 
-    def __init__(self, path=[], fitness=0, travelCost=0, totalTime=0, totalProfit=0, totalWeight=0):
+    def __init__(self, path=[], fitness=0, travelCost=0, totalTime=18, totalProfit=0, totalWeight=0):
         self.path = path
         self.fitness = fitness
         self.travelCost = travelCost

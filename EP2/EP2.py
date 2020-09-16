@@ -3,8 +3,15 @@ from GenerateCities import generateCities
 from City import City
 from Movementation import Movementation
 from Path import Path
-from Aux import getMovimentation
 
+
+def getMovimentation(city: City, movementations: [Movementation]):
+    movement = None
+    for movementation in movementations:
+        if movementation.city.name == city.name:
+            movement = movementation
+    return movement
+    
 
 class EP2:
 
@@ -43,36 +50,42 @@ class EP2:
     def fitness(self):
         # TODO: Fazer a funcao de fitness de cada caminho
         #       Fazer o totalTravelTime, e outros atributos do Caminho
-        fitnessValue = 0
-        pathTravelCost = 0
-        pathTotalTime = 0
-        pathTotalProfit = 0
-        pathTotalWeight = 0
+        # for path in self.paths:
+            
+        #     count = 0
+        #     for city in path.path:
+        #         for city2 in path.path:
+        #             if city.name == "Escondidos":
+        #                 count += 0
+        #             elif city2.name == city.name:
+        #                 count += 1
+        #     print(count)
+        #     if count > 0:
+        #         self.paths.remove(path)
 
-        for path in self.paths:
-            fitnessValue = 0
-            pathTravelCost = 0
-            pathTotalTime = 18  # No travel time nor sleep
-            pathTotalProfit = 0
-            pathTotalWeight = 0
-            for index, city in enumerate(path.path, start=1):
-                # movementation: [Movementation] = getMovimentation(
-                #     path.path[index - 1], city.movementations)
-                # pathTravelCost += movementation.cost
-                pathTotalTime += city.robberyTime  # + movementation.timeToArrive
-                pathTotalProfit += city.robberyProfit
-                pathTotalWeight += city.itemWeight
+        # print(len(self.paths))
 
-            # xath travel cost precisa de uma get movementation, para pegar o valor de dentro dos movimentos
-            #pathTravelCost += path.p
-
-            print(city.name)
+        for individual in self.paths:
+            i = 1
+            while i < len(individual.path):
+                movementation = getMovimentation(individual.path[i - 1], individual.path[i].movementations)
+                individual.travelCost += movementation.cost
+                individual.totalTime += individual.path[i].robberyTime + movementation.timeToArrive
+                individual.totalProfit += individual.path[i].robberyProfit - movementation.cost
+                individual.totalWeight += individual.path[i].itemWeight
+                i += 1
+            individual.fitness = individual.totalProfit * 100 / 40000
             print("------------")
-            print("Travel Cost: ", pathTravelCost)
-            print("Total Time: ", pathTotalTime)
-            print("Profit: ", pathTotalProfit)
-            print("Total Weight: ", pathTotalWeight)
+            print("Fitness: ", individual.fitness)
+            print("Travel Cost: ", individual.travelCost)
+            print("Total Time: ", individual.totalTime)
+            print("Profit: ", individual.totalProfit)
+            print("Total Weight: ", individual.totalWeight)
             print("")
+
+            # TODO: - Remover caminhos que não são possiveis
+            #       - Ordenar os caminhos por fitness
+            #       - Fazer funcao que pega individuos para fazer cross-over
 
         return
 
@@ -97,17 +110,6 @@ class EP2:
     def checkSuccessCondition(self):
         return
 
-    def getMovimentation(self, city: City, movementation: [Movementation]):
-        # print(movementation[0].cost)
-        temp = [Movementation]
-        # temp[0].cost
-        for i in range(len(movementation)):
-            print(movementation[i])
-            temp.append(movementation[i])
-
-        for index in range(len(temp)):
-            if temp[index].city == city:
-                return temp
 
 
 ep2 = EP2()
