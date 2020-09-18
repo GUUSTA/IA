@@ -18,6 +18,8 @@ class EP2:
     cities = []
     firstPopulation = [[City]]
     paths = [Path]
+    citiesQuantity = 7
+    populationQuantity = 100
 
     def __init__(self):
         self.cities = generateCities()
@@ -28,53 +30,57 @@ class EP2:
     def generateInitialPopulation(self):
         random.seed()
         self.firstPopulation = [
-            [random.choice(self.cities) for y in range(4)] for x in range(19)]
+            [random.choice(self.cities) for y in range(self.citiesQuantity)] for x in range(self.populationQuantity)]
 
-        for i in range(19):
+        for i in range(self.populationQuantity):
             self.firstPopulation[i][0] = self.cities[0]
 
-        self.paths = [Path() for y in range(19)]
+        self.paths = [Path() for y in range(self.populationQuantity)]
 
-        for l in range(19):
+        for l in range(self.populationQuantity):
             newPath = Path()
             newPath.path = []
-            for c in range(4):
+            for c in range(self.citiesQuantity):
                 newPath.path.append(self.firstPopulation[l][c])
             self.paths[l] = newPath
-
-        # for path in self.paths:
-        #     print(path.path[0].name)
 
         return
 
     def fitness(self):
-        # TODO: Fazer a funcao de fitness de cada caminho
-        #       Fazer o totalTravelTime, e outros atributos do Caminho
-        # for path in self.paths:
+        duplicated = []
+        for path in self.paths:
+            count = 0
+            for index1, city1 in enumerate(path.path, start=0):
+                for index2, city2 in enumerate(path.path, start=0):
+                    if city1.name == "Escondidos" and city2.name == "Escondidos":
+                        count += 0
+                    elif city1.name == city2.name and index1 != index2:
+                        count += 1
             
-        #     count = 0
-        #     for city in path.path:
-        #         for city2 in path.path:
-        #             if city.name == "Escondidos":
-        #                 count += 0
-        #             elif city2.name == city.name:
-        #                 count += 1
-        #     print(count)
-        #     if count > 0:
-        #         self.paths.remove(path)
+            if count > 0:
+                duplicated.append(path)
 
-        # print(len(self.paths))
+        for path in duplicated:
+            self.paths.remove(path)
+
+        # for index, path in enumerate(self.paths, start=0):
+        #     print("path ", index)
+        #     for city in path.path:
+        #         print(city.name)
+        #     print()
+
+        print("Population of:", len(self.paths))
 
         for individual in self.paths:
             i = 1
-            while i < len(individual.path):
+            while i < self.citiesQuantity:
                 movementation = getMovimentation(individual.path[i - 1], individual.path[i].movementations)
                 individual.travelCost += movementation.cost
                 individual.totalTime += individual.path[i].robberyTime + movementation.timeToArrive
                 individual.totalProfit += individual.path[i].robberyProfit - movementation.cost
                 individual.totalWeight += individual.path[i].itemWeight
                 i += 1
-            individual.fitness = individual.totalProfit * 100 / 40000
+            individual.fitness = individual.totalProfit * 100 / 50000
             print("------------")
             print("Fitness: ", individual.fitness)
             print("Travel Cost: ", individual.travelCost)
@@ -82,11 +88,27 @@ class EP2:
             print("Profit: ", individual.totalProfit)
             print("Total Weight: ", individual.totalWeight)
             print("")
+             
+        invalidPaths = []
+        for individual in self.paths:
+            if individual.totalTime > 72 or individual.totalWeight > 20:
+                invalidPaths.append(individual)
 
+        for path in invalidPaths:
+            self.paths.remove(path)
+
+        print("Population after fitness:", len(self.paths))
             # TODO: - Remover caminhos que não são possiveis
             #       - Ordenar os caminhos por fitness
             #       - Fazer funcao que pega individuos para fazer cross-over
-
+        for individual in self.paths:
+            print("------------")
+            print("Fitness: ", individual.fitness)
+            print("Travel Cost: ", individual.travelCost)
+            print("Total Time: ", individual.totalTime)
+            print("Profit: ", individual.totalProfit)
+            print("Total Weight: ", individual.totalWeight)
+            print("")
         return
 
     def selectCrossOverIndividuals(self):
