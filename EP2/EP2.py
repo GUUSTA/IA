@@ -3,15 +3,7 @@ from GenerateCities import generateCities
 from City import City
 from Movementation import Movementation
 from Path import Path
-
-
-def getMovimentation(city: City, movementations: [Movementation]):
-    movement = None
-    for movementation in movementations:
-        if movementation.city.name == city.name:
-            movement = movementation
-    return movement
-    
+from Aux import getMovimentation
 
 class EP2:
 
