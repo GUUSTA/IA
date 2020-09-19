@@ -5,6 +5,7 @@ from Movementation import Movementation
 from Path import Path
 from Aux import getMovimentation
 
+
 class EP2:
 
     cities = []
@@ -38,6 +39,9 @@ class EP2:
 
         return
 
+    def getFitness(self, way: Path):
+        return way.fitness
+
     def fitness(self):
         duplicated = []
         for path in self.paths:
@@ -48,7 +52,7 @@ class EP2:
                         count += 0
                     elif city1.name == city2.name and index1 != index2:
                         count += 1
-            
+
             if count > 0:
                 duplicated.append(path)
 
@@ -66,10 +70,13 @@ class EP2:
         for individual in self.paths:
             i = 1
             while i < self.citiesQuantity:
-                movementation = getMovimentation(individual.path[i - 1], individual.path[i].movementations)
+                movementation = getMovimentation(
+                    individual.path[i - 1], individual.path[i].movementations)
                 individual.travelCost += movementation.cost
-                individual.totalTime += individual.path[i].robberyTime + movementation.timeToArrive
-                individual.totalProfit += individual.path[i].robberyProfit - movementation.cost
+                individual.totalTime += individual.path[i].robberyTime + \
+                    movementation.timeToArrive
+                individual.totalProfit += individual.path[i].robberyProfit - \
+                    movementation.cost
                 individual.totalWeight += individual.path[i].itemWeight
                 i += 1
             individual.fitness = individual.totalProfit * 100 / 50000
@@ -80,7 +87,7 @@ class EP2:
             print("Profit: ", individual.totalProfit)
             print("Total Weight: ", individual.totalWeight)
             print("")
-             
+
         invalidPaths = []
         for individual in self.paths:
             if individual.totalTime > 72 or individual.totalWeight > 20:
@@ -90,9 +97,9 @@ class EP2:
             self.paths.remove(path)
 
         print("Population after fitness:", len(self.paths))
-            # TODO: - Remover caminhos que não são possiveis
-            #       - Ordenar os caminhos por fitness
-            #       - Fazer funcao que pega individuos para fazer cross-over
+        # TODO: - Remover caminhos que não são possiveis
+        #       - Ordenar os caminhos por fitness
+        #       - Fazer funcao que pega individuos para fazer cross-over
         for individual in self.paths:
             print("------------")
             print("Fitness: ", individual.fitness)
@@ -101,9 +108,25 @@ class EP2:
             print("Profit: ", individual.totalProfit)
             print("Total Weight: ", individual.totalWeight)
             print("")
+
+        # orderedPaths = []
+        # orderedPaths = sorted(self.paths, key=self.getFitness, reverse=True)
+        self.paths.sort(key=self.getFitness, reverse=True)
+
+        for individual in self.paths:
+            print("------------")
+            print("Fitness Ordered List: ", individual.fitness)
+            print("------------")
+
         return
 
-    def selectCrossOverIndividuals(self):
+    def selectCrossOverIndividuals(self, path: Path):
+        length = len(path)
+        indexes = []
+        # for index, individual in enumerate(self.paths, start=0):
+        for i in range(length):
+            temp = (i, length/2 + i - 1)
+            indexes.append(temp)
         return
 
     def crossOver(self):
@@ -123,7 +146,6 @@ class EP2:
 
     def checkSuccessCondition(self):
         return
-
 
 
 ep2 = EP2()
