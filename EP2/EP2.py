@@ -5,6 +5,7 @@ from Movementation import Movementation
 from Path import Path
 from Aux import getMovimentation
 
+
 class EP2:
 
     cities = []
@@ -82,6 +83,10 @@ class EP2:
             self.paths.remove(path)
         print("Population after atMostOneEscondidos:", len(self.paths))
 
+    
+    def getFitness(self, way: Path):
+        return way.fitness
+
     def cutDuplicatedCities(self):
         duplicated = []
         for path in self.paths:
@@ -118,8 +123,10 @@ class EP2:
             while i < len(individual.path):
                 movementation = getMovimentation(individual.path[i - 1], individual.path[i].movementations)
                 individual.travelCost += movementation.cost
-                individual.totalTime += individual.path[i].robberyTime + movementation.timeToArrive
-                individual.totalProfit += individual.path[i].robberyProfit - movementation.cost
+                individual.totalTime += individual.path[i].robberyTime + \
+                    movementation.timeToArrive
+                individual.totalProfit += individual.path[i].robberyProfit - \
+                    movementation.cost
                 individual.totalWeight += individual.path[i].itemWeight
                 i += 1
             individual.fitness = individual.totalProfit * 100 / 50000
@@ -131,7 +138,6 @@ class EP2:
 
         for path in outOfLimits:
             self.paths.remove(path)
-
         print("Population after outOfLimits:", len(self.paths))
 
     def cutPathsWithFitnessZero(self):
@@ -141,7 +147,16 @@ class EP2:
                 fitnessZero.append(path)
         for path in fitnessZero:
             self.paths.remove(path)
+        print("Population after cut fitnessZero elemets:", len(self.paths))
 
+    def sortPaths(self):
+        # orderedPaths = []
+        # orderedPaths = sorted(self.paths, key=self.getFitness, reverse=True)
+        self.paths.sort(key=self.getFitness, reverse=True)
+
+        for individual in self.paths:
+            print("Fitness Ordered List: ", individual.fitness)
+        
     
     def fitness(self):
         self.cutAtTheMostOneEscondidos()
@@ -149,12 +164,20 @@ class EP2:
         self.getCirclePaths()
         self.defineFitnessPathsAndCutPathsWithRulesOut()
         self.cutPathsWithFitnessZero()
-
         self.printPathsDetailed()
-        print("Population after cut fitnessZero elemets:", len(self.paths))
+        
+
+
+
         return
 
-    def selectCrossOverIndividuals(self):
+    def selectCrossOverIndividuals(self, path: Path):
+        length = len(path)
+        indexes = []
+        # for index, individual in enumerate(self.paths, start=0):
+        for i in range(length):
+            temp = (i, length/2 + i - 1)
+            indexes.append(temp)
         return
 
     def crossOver(self):
@@ -174,7 +197,6 @@ class EP2:
 
     def checkSuccessCondition(self):
         return
-
 
 
 ep2 = EP2()

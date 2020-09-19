@@ -19,7 +19,7 @@ class Path:
         self.totalWeight = totalWeight
 
     def getFitness(self):
-        return
+        return self.fitness
 
     def getTravelCost(self):
         return
