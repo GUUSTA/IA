@@ -165,10 +165,7 @@ class EP2:
         self.defineFitnessPathsAndCutPathsWithRulesOut()
         self.cutPathsWithFitnessZero()
         self.printPathsDetailed()
-        
-
-
-
+        self.sortPaths()
         return
 
     def selectCrossOverIndividuals(self, path: Path):
