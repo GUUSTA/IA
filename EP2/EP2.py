@@ -154,12 +154,7 @@ class EP2:
         print("Population after cut fitnessZero elemets:", len(self.paths))
 
     def sortPaths(self):
-        # orderedPaths = []
-        # orderedPaths = sorted(self.paths, key=self.getFitness, reverse=True)
         self.paths.sort(key=self.getFitness, reverse=True)
-
-        # for individual in self.paths:
-        #     print("Fitness Ordered List: ", individual.fitness)
 
     def printTheBestPath(self):
 
@@ -192,33 +187,10 @@ class EP2:
         oneOfTheBest = random.choice(first5)
         middleIndex = int(len(self.paths)/2)
         middlePath = random.choice(self.paths[middleIndex-10:middleIndex+10])
-        # PARTE DO ERIC
-        # length = len(path)
-        # indexes = []
-        # # for index, individual in enumerate(self.paths, start=0):
-        # for i in range(length):
-        #     temp = (i, length/2 + i - 1)
-        #     indexes.append(temp)
         return [oneOfTheBest, middlePath]
 
     def cutDuplicatesCrossover(self, array):
-        postCrossOver = array
         duplicated = []
-        # for path in array:
-        #     count = 0
-        #     flipped = False
-        #     for index1, city1 in enumerate(path, start=0):
-        #         for index2, city2 in enumerate(path, start=0):
-        #             if city1.name == "Escondidos" and city2.name == "Escondidos":
-        #                 count += 0
-        #             elif city1.name == city2.name and index1 != index2:
-        #                 count += 1
-        #     if count > 0 and flipped == False:
-        #         duplicated.append(city1)
-        #         flipped = not flipped
-        #     elif count > 0 and flipped == True:
-        #         duplicated.append(city2)
-        #         flipped = not flipped
 
         for index1, city1 in enumerate(array, start=0):
             count = 0
@@ -238,8 +210,6 @@ class EP2:
                 indexes.append(index2)
                 flipped = not flipped
 
-        # for city in duplicated:
-        #     array.remove(city)
         for i in range(len(indexes)):
             array.pop(i)
         print("Size crossover:", len(array))
@@ -264,7 +234,6 @@ class EP2:
         for individual in helper:
             print("Helper:", individual.name)
         self.cutDuplicatesCrossover(helper)
-
         return helper
 
     def selectMutationIndividuals(self):
