@@ -11,15 +11,29 @@ class EP2:
     cities = []
     firstPopulation = [[City]]
     paths = [Path]
-    citiesQuantity = 8
-    populationQuantity = 500
+    citiesQuantity = 6
+    populationQuantity = 1000
+    iterations = 0
+    printIndex = 0
+    nextGeneration = []
 
     def __init__(self):
         self.cities = generateCities()
         self.generateInitialPopulation()
-        self.fitness()
-        auxiliar = self.selectCrossOverIndividuals()
-        self.crossOver(auxiliar[0], auxiliar[1])
+        while(self.iterations < 100):
+            self.fitness()
+            for _ in range(100):
+                auxiliar = self.selectCrossOverIndividuals()
+                self.crossOver(auxiliar[0], auxiliar[1])
+                self.crossOver(auxiliar[1], auxiliar[0])
+            self.mutation()
+            self.iterations += 1
+            self.printIndex += 1
+            if self.printIndex == 10:
+                self.printTheBestPath()
+                self.printIndex = 0
+                print(len(self.paths))
+        
         return
 
     def printPaths(self):
@@ -83,7 +97,7 @@ class EP2:
                 atMostOneEscondidos.append(path)
         for path in atMostOneEscondidos:
             self.paths.remove(path)
-        print("Population after atMostOneEscondidos:", len(self.paths))
+        # print("Population after atMostOneEscondidos:", len(self.paths))
 
     def getFitness(self, way: Path):
         return way.fitness
@@ -103,7 +117,7 @@ class EP2:
 
         for path in duplicated:
             self.paths.remove(path)
-        print("Population after duplicates:", len(self.paths))
+        # print("Population after duplicates:", len(self.paths))
 
     def getCirclePaths(self):
         nextEscondidosPath = []
@@ -118,11 +132,16 @@ class EP2:
         for indexPath, until in enumerate(nextEscondidosPath, start=0):
             self.paths[indexPath].path = self.paths[indexPath].path[:until]
 
-        print("Population after getCirclePaths:", len(self.paths))
+        # print("Population after getCirclePaths:", len(self.paths))
 
     def defineFitnessPathsAndCutPathsWithRulesOut(self):
         for individual in self.paths:
             i = 1
+            individual.fitness = 0
+            individual.totalProfit = 0
+            individual.totalTime = 0
+            individual.totalWeight = 0
+            individual.travelCost = 0
             while i < len(individual.path):
                 movementation = getMovimentation(
                     individual.path[i - 1], individual.path[i].movementations)
@@ -142,7 +161,7 @@ class EP2:
 
         for path in outOfLimits:
             self.paths.remove(path)
-        print("Population after outOfLimits:", len(self.paths))
+        # print("Population after outOfLimits:", len(self.paths))
 
     def cutPathsWithFitnessZero(self):
         fitnessZero = []
@@ -151,7 +170,7 @@ class EP2:
                 fitnessZero.append(path)
         for path in fitnessZero:
             self.paths.remove(path)
-        print("Population after cut fitnessZero elemets:", len(self.paths))
+        # print("Population after cut fitnessZero elemets:", len(self.paths))
 
     def sortPaths(self):
         self.paths.sort(key=self.getFitness, reverse=True)
@@ -178,15 +197,13 @@ class EP2:
         self.defineFitnessPathsAndCutPathsWithRulesOut()
         self.cutPathsWithFitnessZero()
         self.sortPaths()
-        self.printPathsDetailed()
-        self.printTheBestPath()
-        return
+        # self.printPathsDetailed()
 
     def selectCrossOverIndividuals(self):
-        first5 = self.paths[:10]
+        first5 = self.paths[:20]
         oneOfTheBest = random.choice(first5)
         middleIndex = int(len(self.paths)/2)
-        middlePath = random.choice(self.paths[middleIndex-10:middleIndex+10])
+        middlePath = random.choice(self.paths[21:(len(self.paths)-1)])
         return [oneOfTheBest, middlePath]
 
     def cutDuplicatesCrossover(self, array):
@@ -212,35 +229,58 @@ class EP2:
 
         for i in range(len(indexes)):
             array.pop(i)
-        print("Size crossover:", len(array))
+        # print("Size crossover:", len(array))
 
-        for city in array:
-            print("CrossOver Result: ", city.name)
+        # for city in array:
+        #     print("CrossOver Result: ", city.name)
 
         return array
 
     def crossOver(self, path1: Path, path2: Path):
         helper = []
-        path1.path.pop()
-        path2.path.pop(0)
-        print("-----||-----")
-        for individual in path1.path:
-            print("Path 1:", individual.name)
-        for individual in path2.path:
-            print("Path 2:", individual.name)
-        print("-----||-----")
-        helper.extend(path1.path)
-        helper.extend(path2.path)
-        for individual in helper:
-            print("Helper:", individual.name)
-        self.cutDuplicatesCrossover(helper)
-        return helper
+        cities1Copy = list(path1.path)
+        cities2Copy = list(path2.path)
+        cities1Copy.pop()
+        cities2Copy.pop(0)
+        # print("-----||-----")
+        # for individual in path1.path:
+        #     print("Path 1:", individual.name)
+        # for individual in path2.path:
+        #     print("Path 2:", individual.name)
+        # print("-----||-----")
+        helper.extend(cities1Copy)
+        helper.extend(cities2Copy)
+        # for individual in helper:
+        #     print("Helper:", individual.name)
+        cities = self.cutDuplicatesCrossover(helper)
+        newPath = Path(cities)
+        self.paths.append(newPath)
 
     def selectMutationIndividuals(self):
         return
 
     def mutation(self):
-        return
+        selectedPaths = self.paths[:30]
+        for path in selectedPaths:
+            random.seed()
+            if len(path.path) > 4:
+                index1 = random.randrange(1, (len(path.path)-2))
+                index2 = random.randrange(1, (len(path.path)-2))
+                while(index1 == index2):
+                    index2 = random.randrange(1, (len(path.path)-2))
+                citiesCopy = list(path.path)
+                first_city = citiesCopy[index1]
+                citiesCopy[index1] = citiesCopy[index2]
+                citiesCopy[index2] = first_city
+                newPath = Path(citiesCopy)
+                self.paths.append(newPath)
+            else:
+                citiesCopy = list(path.path)
+                first_city = citiesCopy[1]
+                citiesCopy[1] = citiesCopy[2]
+                citiesCopy[2] = first_city
+                newPath = Path(citiesCopy)
+                self.paths.append(newPath)
 
     def createNewGeneration(self):
         return
@@ -249,7 +289,7 @@ class EP2:
         return
 
     def checkSuccessCondition(self):
-        return
+        return self.paths[0].totalProfit > 36000
 
 
 ep2 = EP2()
