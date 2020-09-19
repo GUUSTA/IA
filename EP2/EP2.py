@@ -18,6 +18,8 @@ class EP2:
         self.cities = generateCities()
         self.generateInitialPopulation()
         self.fitness()
+        auxiliar = self.selectCrossOverIndividuals()
+        self.crossOver(auxiliar[0], auxiliar[1])
         return
 
     def printPaths(self):
@@ -78,12 +80,11 @@ class EP2:
                 if city.name == "Escondidos":
                     count += 1
             if count < 2:
-                atMostOneEscondidos.append(path)  
+                atMostOneEscondidos.append(path)
         for path in atMostOneEscondidos:
             self.paths.remove(path)
         print("Population after atMostOneEscondidos:", len(self.paths))
 
-    
     def getFitness(self, way: Path):
         return way.fitness
 
@@ -123,7 +124,8 @@ class EP2:
         for individual in self.paths:
             i = 1
             while i < len(individual.path):
-                movementation = getMovimentation(individual.path[i - 1], individual.path[i].movementations)
+                movementation = getMovimentation(
+                    individual.path[i - 1], individual.path[i].movementations)
                 individual.travelCost += movementation.cost
                 individual.totalTime += individual.path[i].robberyTime + \
                     movementation.timeToArrive
@@ -132,7 +134,7 @@ class EP2:
                 individual.totalWeight += individual.path[i].itemWeight
                 i += 1
             individual.fitness = individual.totalProfit * 100 / 50000
-             
+
         outOfLimits = []
         for individual in self.paths:
             if individual.totalTime > 72 or individual.totalWeight > 20:
@@ -158,7 +160,7 @@ class EP2:
 
         # for individual in self.paths:
         #     print("Fitness Ordered List: ", individual.fitness)
-        
+
     def printTheBestPath(self):
 
         print("THE BEST PATH")
@@ -174,7 +176,6 @@ class EP2:
         print()
         print("------------")
 
-
     def fitness(self):
         self.cutAtTheMostOneEscondidos()
         self.cutDuplicatedCities()
@@ -186,12 +187,12 @@ class EP2:
         self.printTheBestPath()
         return
 
-    def selectCrossOverIndividuals(self, path: Path):
+    def selectCrossOverIndividuals(self):
         first5 = self.paths[:10]
         oneOfTheBest = random.choice(first5)
         middleIndex = int(len(self.paths)/2)
-        middlePath = random.choice(self.paths[middleIndex-10:middleIndex+10]) 
-        ## PARTE DO ERIC
+        middlePath = random.choice(self.paths[middleIndex-10:middleIndex+10])
+        # PARTE DO ERIC
         # length = len(path)
         # indexes = []
         # # for index, individual in enumerate(self.paths, start=0):
@@ -200,8 +201,71 @@ class EP2:
         #     indexes.append(temp)
         return [oneOfTheBest, middlePath]
 
-    def crossOver(self):
-        return
+    def cutDuplicatesCrossover(self, array):
+        postCrossOver = array
+        duplicated = []
+        # for path in array:
+        #     count = 0
+        #     flipped = False
+        #     for index1, city1 in enumerate(path, start=0):
+        #         for index2, city2 in enumerate(path, start=0):
+        #             if city1.name == "Escondidos" and city2.name == "Escondidos":
+        #                 count += 0
+        #             elif city1.name == city2.name and index1 != index2:
+        #                 count += 1
+        #     if count > 0 and flipped == False:
+        #         duplicated.append(city1)
+        #         flipped = not flipped
+        #     elif count > 0 and flipped == True:
+        #         duplicated.append(city2)
+        #         flipped = not flipped
+
+        for index1, city1 in enumerate(array, start=0):
+            count = 0
+            flipped = False
+            indexes = []
+            for index2, city2 in enumerate(array, start=0):
+                if city1.name == "Escondidos" and city2.name == "Escondidos":
+                    count += 0
+                elif city1.name == city2.name and index1 != index2:
+                    count += 1
+            if count > 0 and flipped == False:
+                duplicated.append(city1)
+                indexes.append(index1)
+                flipped = not flipped
+            elif count > 0 and flipped == True:
+                duplicated.append(city2)
+                indexes.append(index2)
+                flipped = not flipped
+
+        # for city in duplicated:
+        #     array.remove(city)
+        for i in range(len(indexes)):
+            array.pop(i)
+        print("Size crossover:", len(array))
+
+        for city in array:
+            print("CrossOver Result: ", city.name)
+
+        return array
+
+    def crossOver(self, path1: Path, path2: Path):
+        helper = []
+        path1.path.pop()
+        path2.path.pop(0)
+        print("-----||-----")
+        for individual in path1.path:
+            print("Path 1:", individual.name)
+        for individual in path2.path:
+            print("Path 2:", individual.name)
+        print("-----||-----")
+        helper.extend(path1.path)
+        helper.extend(path2.path)
+        for individual in helper:
+            print("Helper:", individual.name)
+        self.cutDuplicatesCrossover(helper)
+
+        return helper
 
     def selectMutationIndividuals(self):
         return
