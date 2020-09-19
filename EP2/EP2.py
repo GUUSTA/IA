@@ -19,6 +19,37 @@ class EP2:
         self.fitness()
         return
 
+    def printPaths(self):
+        for index, path in enumerate(self.paths, start=0):
+            print("Path", index, ": ", end='')
+            for city in path.path:
+                print(city.name, " - ", end='')
+            print()
+
+    def printPathsFitness(self):
+        for individual in self.paths:
+            print("------------")
+            print("Fitness: ", individual.fitness)
+            print("Travel Cost: ", individual.travelCost)
+            print("Total Time: ", individual.totalTime)
+            print("Profit: ", individual.totalProfit)
+            print("Total Weight: ", individual.totalWeight)
+            print()
+
+    def printPathsDetailed(self):
+        for index, path in enumerate(self.paths, start=0):
+            print("Path", index, ": ", end='')
+            for city in path.path:
+                print(city.name, " - ", end='')
+            print()
+            print("Fitness: ", path.fitness)
+            print("Travel Cost: ", path.travelCost)
+            print("Total Time: ", path.totalTime)
+            print("Profit: ", path.totalProfit)
+            print("Total Weight: ", path.totalWeight)
+            print()
+            print("------------")
+
     def generateInitialPopulation(self):
         random.seed()
         self.firstPopulation = [
@@ -38,7 +69,7 @@ class EP2:
 
         return
 
-    def fitness(self):
+    def cutAtTheMostOneEscondidos(self):
         atMostOneEscondidos = []
         for path in self.paths:
             count = 0
@@ -47,12 +78,11 @@ class EP2:
                     count += 1
             if count < 2:
                 atMostOneEscondidos.append(path)  
-
         for path in atMostOneEscondidos:
             self.paths.remove(path)
-        
         print("Population after atMostOneEscondidos:", len(self.paths))
 
+    def cutDuplicatedCities(self):
         duplicated = []
         for path in self.paths:
             count = 0
@@ -62,19 +92,30 @@ class EP2:
                         count += 0
                     elif city1.name == city2.name and index1 != index2:
                         count += 1
-            
             if count > 0:
                 duplicated.append(path)
 
         for path in duplicated:
             self.paths.remove(path)
-        
         print("Population after duplicates:", len(self.paths))
 
+    def getCirclePaths(self):
+        nextEscondidosPath = []
         for individual in self.paths:
             i = 1
-            
-            while i < self.citiesQuantity:
+            while i < len(individual.path):
+                if individual.path[i].name == "Escondidos":
+                    nextEscondidosPath.append(i+1)
+                    break
+                i += 1
+
+        for indexPath, until in enumerate(nextEscondidosPath, start=0):
+            self.paths[indexPath].path = self.paths[indexPath].path[:until]
+
+    def defineFitnessPathsAndCutPathsWithRulesOut(self):
+        for individual in self.paths:
+            i = 1
+            while i < len(individual.path):
                 movementation = getMovimentation(individual.path[i - 1], individual.path[i].movementations)
                 individual.travelCost += movementation.cost
                 individual.totalTime += individual.path[i].robberyTime + movementation.timeToArrive
@@ -82,13 +123,6 @@ class EP2:
                 individual.totalWeight += individual.path[i].itemWeight
                 i += 1
             individual.fitness = individual.totalProfit * 100 / 50000
-            # print("------------")
-            # print("Fitness: ", individual.fitness)
-            # print("Travel Cost: ", individual.travelCost)
-            # print("Total Time: ", individual.totalTime)
-            # print("Profit: ", individual.totalProfit)
-            # print("Total Weight: ", individual.totalWeight)
-            # print("")
              
         outOfLimits = []
         for individual in self.paths:
@@ -99,17 +133,25 @@ class EP2:
             self.paths.remove(path)
 
         print("Population after outOfLimits:", len(self.paths))
-            # TODO: - Remover caminhos que não são possiveis
-            #       - Ordenar os caminhos por fitness
-            #       - Fazer funcao que pega individuos para fazer cross-over
-        # for individual in self.paths:
-        #     print("------------")
-        #     print("Fitness: ", individual.fitness)
-        #     print("Travel Cost: ", individual.travelCost)
-        #     print("Total Time: ", individual.totalTime)
-        #     print("Profit: ", individual.totalProfit)
-        #     print("Total Weight: ", individual.totalWeight)
-        #     print("")
+
+    def cutPathsWithFitnessZero(self):
+        fitnessZero = []
+        for path in self.paths:
+            if path.fitness == 0.0:
+                fitnessZero.append(path)
+        for path in fitnessZero:
+            self.paths.remove(path)
+
+    
+    def fitness(self):
+        self.cutAtTheMostOneEscondidos()
+        self.cutDuplicatedCities()
+        self.getCirclePaths()
+        self.defineFitnessPathsAndCutPathsWithRulesOut()
+        self.cutPathsWithFitnessZero()
+
+        self.printPathsDetailed()
+        print("Population after cut fitnessZero elemets:", len(self.paths))
         return
 
     def selectCrossOverIndividuals(self):
