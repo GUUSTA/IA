@@ -117,6 +117,8 @@ class EP2:
         for indexPath, until in enumerate(nextEscondidosPath, start=0):
             self.paths[indexPath].path = self.paths[indexPath].path[:until]
 
+        print("Population after getCirclePaths:", len(self.paths))
+
     def defineFitnessPathsAndCutPathsWithRulesOut(self):
         for individual in self.paths:
             i = 1
@@ -154,28 +156,49 @@ class EP2:
         # orderedPaths = sorted(self.paths, key=self.getFitness, reverse=True)
         self.paths.sort(key=self.getFitness, reverse=True)
 
-        for individual in self.paths:
-            print("Fitness Ordered List: ", individual.fitness)
+        # for individual in self.paths:
+        #     print("Fitness Ordered List: ", individual.fitness)
         
-    
+    def printTheBestPath(self):
+
+        print("THE BEST PATH")
+        bestPath = self.paths[0]
+        for city in bestPath.path:
+            print(city.name, " - ", end='')
+        print()
+        print("Fitness: ", bestPath.fitness)
+        print("Travel Cost: ", bestPath.travelCost)
+        print("Total Time: ", bestPath.totalTime)
+        print("Profit: ", bestPath.totalProfit)
+        print("Total Weight: ", bestPath.totalWeight)
+        print()
+        print("------------")
+
+
     def fitness(self):
         self.cutAtTheMostOneEscondidos()
         self.cutDuplicatedCities()
         self.getCirclePaths()
         self.defineFitnessPathsAndCutPathsWithRulesOut()
         self.cutPathsWithFitnessZero()
-        self.printPathsDetailed()
         self.sortPaths()
+        self.printPathsDetailed()
+        self.printTheBestPath()
         return
 
     def selectCrossOverIndividuals(self, path: Path):
-        length = len(path)
-        indexes = []
-        # for index, individual in enumerate(self.paths, start=0):
-        for i in range(length):
-            temp = (i, length/2 + i - 1)
-            indexes.append(temp)
-        return
+        first5 = self.paths[:10]
+        oneOfTheBest = random.choice(first5)
+        middleIndex = int(len(self.paths)/2)
+        middlePath = random.choice(self.paths[middleIndex-10:middleIndex+10]) 
+        ## PARTE DO ERIC
+        # length = len(path)
+        # indexes = []
+        # # for index, individual in enumerate(self.paths, start=0):
+        # for i in range(length):
+        #     temp = (i, length/2 + i - 1)
+        #     indexes.append(temp)
+        return [oneOfTheBest, middlePath]
 
     def crossOver(self):
         return
