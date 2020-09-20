@@ -16,11 +16,13 @@ class EP2:
     iterations = 0
     printIndex = 0
     nextGeneration = []
+    isNewGeneration = True
+    generationsFitness = []
 
     def __init__(self):
         self.cities = generateCities()
         self.generateInitialPopulation()
-        while(self.iterations < 100):
+        while(self.iterations < 500):
             self.fitness()
             for _ in range(100):
                 auxiliar = self.selectCrossOverIndividuals()
@@ -28,12 +30,15 @@ class EP2:
                 self.crossOver(auxiliar[1], auxiliar[0])
             self.mutation()
             self.iterations += 1
-            self.printIndex += 1
-            if self.printIndex == 10:
+            if self.isNewGeneration:
+                if(self.checkSuccessCondition() or self.compareGenarations()):
+                    self.printTheBestPath()
+                    break
                 self.printTheBestPath()
-                self.printIndex = 0
-                print(len(self.paths))
-        
+                self.isNewGeneration = False
+                self.generationsFitness.append(self.paths[0].fitness)
+            if len(self.nextGeneration) > 500:
+                self.createNewGeneration()
         return
 
     def printPaths(self):
@@ -203,7 +208,7 @@ class EP2:
         first5 = self.paths[:20]
         oneOfTheBest = random.choice(first5)
         middleIndex = int(len(self.paths)/2)
-        middlePath = random.choice(self.paths[21:(len(self.paths)-1)])
+        middlePath = random.choice(self.paths[21:(len(self.paths)-1)])#(len(self.paths)-1)])
         return [oneOfTheBest, middlePath]
 
     def cutDuplicatesCrossover(self, array):
@@ -229,11 +234,6 @@ class EP2:
 
         for i in range(len(indexes)):
             array.pop(i)
-        # print("Size crossover:", len(array))
-
-        # for city in array:
-        #     print("CrossOver Result: ", city.name)
-
         return array
 
     def crossOver(self, path1: Path, path2: Path):
@@ -242,19 +242,11 @@ class EP2:
         cities2Copy = list(path2.path)
         cities1Copy.pop()
         cities2Copy.pop(0)
-        # print("-----||-----")
-        # for individual in path1.path:
-        #     print("Path 1:", individual.name)
-        # for individual in path2.path:
-        #     print("Path 2:", individual.name)
-        # print("-----||-----")
         helper.extend(cities1Copy)
         helper.extend(cities2Copy)
-        # for individual in helper:
-        #     print("Helper:", individual.name)
         cities = self.cutDuplicatesCrossover(helper)
         newPath = Path(cities)
-        self.paths.append(newPath)
+        self.nextGeneration.append(newPath)
 
     def selectMutationIndividuals(self):
         return
@@ -273,20 +265,33 @@ class EP2:
                 citiesCopy[index1] = citiesCopy[index2]
                 citiesCopy[index2] = first_city
                 newPath = Path(citiesCopy)
-                self.paths.append(newPath)
+                self.nextGeneration.append(newPath)
             else:
                 citiesCopy = list(path.path)
                 first_city = citiesCopy[1]
                 citiesCopy[1] = citiesCopy[2]
                 citiesCopy[2] = first_city
                 newPath = Path(citiesCopy)
-                self.paths.append(newPath)
+                self.nextGeneration.append(newPath)
 
     def createNewGeneration(self):
-        return
+        self.isNewGeneration = True
+        for path in self.paths[5:]:
+            self.nextGeneration.append(path)
+        self.paths = list(self.nextGeneration)
+        self.nextGeneration = []
 
     def compareGenarations(self):
-        return
+        if len(self.generationsFitness) > 5:
+            last5Generations = self.generationsFitness[:3]
+            lastGeneration = last5Generations[:1]
+            isEqual = False
+            for generation in last5Generations:
+                if lastGeneration == generation:
+                    isEqual = True
+                else:
+                    isEqual = False
+            return isEqual
 
     def checkSuccessCondition(self):
         return self.paths[0].totalProfit > 36000
