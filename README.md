@@ -1,6 +1,8 @@
 # Inteligência Artificial
 Exercícios realizados para a aula de Inteligência Artificial, do Bacharelado de Ciência da Computação
 
+### Caso queira visualizar individualmente as descrições de cada EP, basta mudar para a branch desejada!
+
 ## EP 1 - O Desenvolvedor Aventureiro(Algoritmo de Busca A*)
 O exercício consiste em aplicar o algoritmo de busca A*(A Estrela) em um mapa para encontrar o melhor caminho entre um ponto inicial e o ponto final. É possível se movimentar para as direções:
   - Esquerda
