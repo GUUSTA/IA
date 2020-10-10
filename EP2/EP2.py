@@ -5,9 +5,7 @@ from Movementation import Movementation
 from Path import Path
 from Aux import getMovimentation
 
-
 class EP2:
-
     cities = []
     firstPopulation = [[City]]
     paths = [Path]
@@ -29,7 +27,6 @@ class EP2:
                 self.crossOver(auxiliar[0], auxiliar[1])
                 self.crossOver(auxiliar[1], auxiliar[0])
             self.mutation()
-            self.iterations += 1
             if self.isNewGeneration:
                 if(self.checkSuccessCondition() or self.compareGenarations()):
                     self.printTheBestPath()
@@ -39,6 +36,7 @@ class EP2:
                 self.generationsFitness.append(self.paths[0].fitness)
             if len(self.nextGeneration) > 500:
                 self.createNewGeneration()
+            self.iterations += 1
         return
 
     def printPaths(self):
@@ -247,9 +245,6 @@ class EP2:
         cities = self.cutDuplicatesCrossover(helper)
         newPath = Path(cities)
         self.nextGeneration.append(newPath)
-
-    def selectMutationIndividuals(self):
-        return
 
     def mutation(self):
         selectedPaths = self.paths[:30]
