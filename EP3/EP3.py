@@ -12,9 +12,19 @@ class ZooZoneConstraint(Constraint[str, str]):
         # yet possible for their colors to be conflicting
         if self.animal1 not in assignment or self.animal2 not in assignment:
             return True
+        
+        if self.animal1 == "Leao":
+            return assignment[self.animal1] == ["Zona 1"]
+        elif self.animal1 == "Antilope":
+            return assignment[self.animal1] != ["Zona 2"] and assignment[self.animal1] != ["Zona "] # Fazer verificao de adjacencia
+        elif self.animal1 == "Suricate":
+            return assignment[self.animal1] != assignment["Javali"]
+        elif self.animal1 == "Javali":
+            return assignment[self.animal1] != assignment["Suricate"]
+
         # check the color assigned to animal1 is not the same as the
         # color assigned to animal2
-        return assignment[self.animal1] != assignment[self.animal2]
+        # return assignment[self.animal1] != assignment[self.animal2]
 
 
 if __name__ == "__main__":
