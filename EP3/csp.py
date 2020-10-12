@@ -69,8 +69,8 @@ class CSP(Generic[V, D]):
         unassigned: List[V] = [v for v in self.variables if v not in assignment]
 
         # get the every possible domain value of the first unassigned variable
-        first: V = unassigned[0]
-        # first: V = self.mcvAlgorithm(unassigned)
+        # first: V = unassigned[0]
+        first: V = self.mcvAlgorithm(unassigned)
         for value in self.domains[first]:
             local_assignment = assignment.copy()
             local_assignment[first] = value
