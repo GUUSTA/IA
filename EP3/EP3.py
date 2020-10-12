@@ -1,6 +1,23 @@
 from csp import Constraint, CSP
 from typing import Dict, List, Optional
 
+def getAnimal(animal):
+    if animal == "Leao":
+        print("Leão 🦁")
+    elif animal == "Tigre":
+        print("Tigre 🐅")
+    elif animal == "Antilope":
+        print("Antilope 🦌")
+    elif animal == "Hiena":
+        print("Hiena 🐕")
+    elif animal == "Pavao":
+        print("Pavão 🦚")
+    elif animal == "Suricate":
+        print("Suricate 🐵")
+    elif animal == "Javali":
+        print("Javali 🐗")
+
+
 class ZooZoneConstraint(Constraint[str, str]):
     def __init__(self, animal1: str, animal2: str) -> None:
         super().__init__([animal1, animal2])
@@ -8,19 +25,14 @@ class ZooZoneConstraint(Constraint[str, str]):
         self.animal2: str = animal2
 
     def satisfied(self, assignment: Dict[str, int]) -> bool:
-        # print(assignment)
-        # print(self.animal1)
-        # print(self.animal2)
-        if self.animal1 == "Leao" and assignment[self.animal1] in assignment:
-            if assignment[self.animal1] == 1:
-                return True
-        if self.animal1 == "Antilope":
+        if self.animal1 == "Leao" and self.animal1 in assignment:
+            return assignment[self.animal1] == 1
+        if self.animal1 == "Antilope" and self.animal1 in assignment:
             if "Leao" in assignment and "Tigre" in assignment:
                 return assignment[self.animal1] != (assignment["Leao"] + 1) and assignment[self.animal1] != (assignment["Tigre"] + 1) and assignment[self.animal1] != (assignment["Tigre"] - 1) 
         if self.animal1 not in assignment or self.animal2 not in assignment:
             return True
         return assignment[self.animal1] != assignment[self.animal2]
-
 
 if __name__ == "__main__":
     variables: List[str] = ["Leao", "Antilope", "Hiena", "Tigre", "Pavao", "Suricate", "Javali"]
@@ -53,4 +65,10 @@ if __name__ == "__main__":
     if solution is None:
         print("No solution found!")
     else:
-        print(solution)
+        print()
+        for zone in [1, 2, 3, 4]:
+            print("Zona", zone)
+            for animal, cage in solution.items():
+                if cage == zone:
+                    getAnimal(animal)
+            print()

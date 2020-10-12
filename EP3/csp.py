@@ -69,8 +69,6 @@ class CSP(Generic[V, D]):
         unassigned: List[V] = [v for v in self.variables if v not in assignment]
 
         # get the every possible domain value of the first unassigned variable
-        # self.mcvAlgorithm(unassigned)
-        print(self.domains[unassigned[0]])
         first: V = unassigned[0]
         # first: V = self.mcvAlgorithm(unassigned)
         for value in self.domains[first]:
@@ -85,13 +83,8 @@ class CSP(Generic[V, D]):
         return None
 
     def mcvAlgorithm(self, unassignedVariables) -> V:
-        # print("VARIABLES---------------------------------------------------------")
         variableWithMoreRestrictions = unassignedVariables[0]
         for variable in unassignedVariables:
             if len(self.constraints[variable]) > len(self.constraints[variableWithMoreRestrictions]):
                 variableWithMoreRestrictions = variable
-            # print(variable)
-            # print(len(self.constraints[variable]))
-            # print()
-        # print("variableWithMoreRestrictions: ", variableWithMoreRestrictions)
         return variableWithMoreRestrictions
