@@ -13,7 +13,7 @@ Leão, Tigre, Hiena, Suricate, Antilope, Pavão e Javali
 
 Domínios: Zonas
 
-Zona1, Zona2, Zona3 e Zona4.
+Zona 1, Zona 2, Zona 3 e Zona 4.
 
 Restrições:
 
@@ -38,7 +38,7 @@ Antilope	!=	Zona do à direita do Tigre
 Antilope	!=	Zona do à Esquerda do Tigre
 
 Conexões:
-	
+
 Tigre = 6
 Hiena = 6
 Leão = 5
