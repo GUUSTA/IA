@@ -1,0 +1,51 @@
+Alunos: Eric Zambom e Gustavo Leite
+
+EP3: CSP - Organização do Zoológico
+
+Objetivo do EP3: "Conseguir fazer um sistema de satisfação de restrições para
+conseguir colocar os animais nas zonas e poderem viver confortavelmente no
+zoológico."
+
+Modelagem do Problema
+
+Variaveis: Animais
+
+Leão, Tigre, Hiena, Suricate, Antilope, Pavão e Javali
+
+Domínios: Zonas
+
+Zona 1, Zona 2, Zona 3 e Zona 4.
+
+Restrições:
+
+Leão	==	Zona1
+Leão	!=	Tigre
+Leão	!=	Pavão
+Tigre	!=	Pavão
+Tigre	!=	Suricate
+Tigre	!=	Javali
+Hiena	!=	Leão
+Hiena	!=	Antilope
+Hiena	!=	Javali
+Hiena	!=	Pavão
+Hiena	!=	Suricate
+Hiena	==	Tigre
+Suricate	==	Javali
+Antilope	!=	Zona do Leão
+Antilope	!=	Zona do à direita do Leão
+Antilope	!=	Zona do à Esquerda do Leão
+Antilope	!=	Zona do Tigre
+Antilope	!=	Zona do à direita do Tigre
+Antilope	!=	Zona do à Esquerda do Tigre
+
+Conexões:
+
+Tigre = 6
+Hiena = 6
+Leão = 5
+Antilope = 3
+Javali = 3
+Pavão = 3
+Suricate = 3
+
+Otimização escolhida: MCV (Escolhe a variavel com maior número de restrições)
