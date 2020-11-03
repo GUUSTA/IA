@@ -1,5 +1,6 @@
 import csv
 import re
+import math
 from collections import Counter
 
 
@@ -29,8 +30,12 @@ class EP4:
     def formatText(self, array):
         normalized = [str.lower(item) for item in array]
         splitted = [re.findall(r"[\w']+", item) for item in normalized]
+        counted = [Counter(item) for item in splitted]
+        summed = Counter({})
+        for item in counted:
+            summed += Counter(item)
 
-        return splitted
+        return summed
 
     def formatTextPt2(self, array):
         counted = [Counter(item) for item in array]
@@ -75,18 +80,40 @@ class EP4:
             negatives = self.formatText(negatives)
             positives = self.formatText(positives)
 
-            print("NEGATIVES")
-            print(negatives)
-            print("POSITIVES")
-            print(positives)
+            for word in self.stopwords:
+                if negatives[word] > 0:
+                    del negatives[word]
+                if positives[word] > 0:
+                    del positives[word]
+            
+            # print("NEGATIVES")
+            # print(negatives)
+            # print("POSITIVES")
+            # print(positives)
 
-            negatives = self.formatTextPt2(negatives)
-            positives = self.formatTextPt2(positives)
+            totalPositives = 0
+            totalNegatives = 0
+            for value in positives.values():
+                totalPositives += value
+
+            for value in negatives.values():
+                totalNegatives += value
+
+            probPositivesSummed = {}
+            probNegativesSummed = {}
+            for key, value in positives.items():
+                probPositivesSummed[key] = math.log(value/totalPositives, 10)
+            
+            for key, value in negatives.items():
+                probNegativesSummed[key] = math.log(value/totalNegatives, 10)
+
+            print("POSITIVES")
+            print(probPositivesSummed)
 
             print("NEGATIVES")
-            print(negatives)
-            print("POSITIVES")
-            print(positives)
+            print(probNegativesSummed)
+
+                
 
 
 ep4 = EP4()
