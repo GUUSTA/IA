@@ -2,6 +2,7 @@ import csv
 import re
 import math
 from collections import Counter
+from decimal import *
 
 
 class EP4:
@@ -19,6 +20,9 @@ class EP4:
     testablePositiveItems = []
     testableNegativeItems = []
 
+    probPositivesSummed = {}
+    probNegativesSummed = {}
+
     def __init__(self):
         self.createDataset()
         self.train()
@@ -32,6 +36,16 @@ class EP4:
             summed += Counter(item)
 
         return summed
+
+    def writeFilePositive(self, text):
+        text_file = open("positives.txt", "wt")
+        n = text_file.write(text)
+        text_file.close()
+
+    def writeFileNegative(self, text):
+        text_file = open("negatives.txt", "wt")
+        n = text_file.write(text)
+        text_file.close()
 
     def createDataset(self):
         print("Opening file: EP4/imdb-reviews-pt-br.csv")
@@ -51,7 +65,6 @@ class EP4:
                 elif newItem[-1] == "pos":
                     self.allPositives.append(newItem[0])
 
-
             print("\nNegatives items: \n")
             print(len(self.allNegatives))
             print("\nPositives items\n")
@@ -62,12 +75,11 @@ class EP4:
             self.testablePositiveItems = self.allPositives[18520:]
             self.testableNegativeItems = self.allNegatives[18573:]
 
-        
     def train(self):
-        
+
         print("Training dataset")
-        
-        print("Formatting traning dataset")
+
+        print("Formatting training dataset")
         negatives = self.formatText(self.trainableNegativeItems)
         positives = self.formatText(self.trainablePositiveItems)
 
@@ -77,7 +89,7 @@ class EP4:
                 del negatives[word]
             if positives[word] > 0:
                 del positives[word]
-        
+
         # print("NEGATIVES")
         # print(negatives)
         # print("POSITIVES")
@@ -91,15 +103,17 @@ class EP4:
 
         for value in negatives.values():
             totalNegatives += value
-        probPositivesSummed = {}
-        probNegativesSummed = {}
         print("Calculate the probability of positives words")
         for key, value in positives.items():
-            probPositivesSummed[key] = math.log(value/totalPositives, 10)
-        
+            self.probPositivesSummed[key] = math.log(
+                value/totalPositives, 10) * 10000
+            # self.writeFilePositive(probPositivesSummed[key])
+
         print("Calculate the probability of negatives words")
         for key, value in negatives.items():
-            probNegativesSummed[key] = math.log(value/totalNegatives, 10)
+            self.probNegativesSummed[key] = math.log(
+                value/totalNegatives, 10) * 10000
+            # self.writeFileNegative(probNegativesSummed[key])
 
         print("POSITIVES")
         # print(probPositivesSummed)
@@ -107,7 +121,37 @@ class EP4:
         print("NEGATIVES")
         # print(probNegativesSummed)
 
-                
+        self.test("Este é um exemplo do motivo pelo qual a maioria dos filmes de ação são os mesmos. Genérico e chato, não há nada que valha a pena assistir aqui. Um completo desperdício dos talentos de Ice-T e Cubo de Gelo que foram mal aproveitados, cada um comprovando que são capazes de atuar e agir bem. Não se incomode com este, vá ver New Jack City, Ricochet ou assistir New York Undercover para Ice-T, ou Boyz no Hood, Higher Learning ou Friday for Ice Cube e ver o negócio real. Ice-Ts horrivelmente clichê diálogo sozinho faz este filme ralar os dentes, e eu ainda estou me perguntando o que diabos Bill Paxton estava fazendo neste filme? E por que diabos ele sempre interpreta exatamente o mesmo personagem? Dos extraterrestres em diante, todos os filmes que eu vi com Bill Paxton o fizeram interpretar exatamente o mesmo personagem irritante, e pelo menos em Aliens seu personagem morreu, o que o tornou um pouco gratificante ... No geral, esse é lixo de ação de segunda classe. Existem incontáveis ​​filmes melhores para ver, e se você realmente quiser ver esse filme, assista a Judgment Night, que é praticamente uma cópia carbono, mas tem melhor atuação e um roteiro melhor. A única coisa que fez isso valer a pena assistir foi uma mão decente na câmera - a cinematografia era quase refrescante, o que chega perto de compensar o horrível filme em si - mas não é bem assim. 4/10")
+
+    def test(self, texto):
+        result = 1
+        first = True
+        for word in texto:
+            if word in self.probPositivesSummed.keys():
+                if first:
+                    result = float(int(self.probPositivesSummed[word])) / 10000
+                    first = False
+                else:
+                    result *= float(
+                        int(self.probPositivesSummed[word])) / 10000
+            else:
+                result *= -1
+        print("%.10f" % result)
+
+        result1 = 1
+        first = True
+        for word in texto:
+            if word in self.probNegativesSummed.keys():
+                if first:
+                    result1 = float(
+                        int(self.probNegativesSummed[word])) / 10000
+                    first = False
+                else:
+                    result1 *= float(
+                        int(self.probNegativesSummed[word])) / 10000
+            else:
+                result1 *= -1
+        print("%.10f" % result1)
 
 
 ep4 = EP4()
