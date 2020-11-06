@@ -3,7 +3,7 @@ import re
 import math
 import csv
 from collections import Counter
-from decimal import *
+from CsvHandler import *
 
 
 class EP4:
@@ -21,12 +21,27 @@ class EP4:
     testablePositiveItems = []
     testableNegativeItems = []
 
-    probPositivesSummed = {}
-    probNegativesSummed = {}
+    positiveWords = {}
+    negativeWords = {}
+    totalValues = []
 
     def __init__(self):
         self.createDataset()
-        self.train()
+        # self.train()
+        self.loadModel()
+        for text in self.testableNegativeItems:
+            print()
+            print("Real resultado: Negativo")
+            self.test(text)
+            print()
+    
+    def loadModel(self):
+        self.positiveWords = readWordsFile("EP4/positives.csv")
+        self.negativeWords = readWordsFile("EP4/negatives.csv")
+        self.totalValues = readWordsFile("EP4/wordsValues.csv")
+        print(self.totalValues)
+        # self.totalValues = []
+
 
     def formatText(self, array):
         normalized = [str.lower(item) for item in array]
@@ -37,25 +52,6 @@ class EP4:
             summed += Counter(item)
 
         return summed
-
-    def writeFilePositive(self, text):
-        text_file = open("positives.txt", "wt")
-        n = text_file.write(text)
-        text_file.close()
-
-    def writeFileNegative(self, text):
-        text_file = open("negatives.txt", "wt")
-        n = text_file.write(text)
-        text_file.close()
-
-    def createCsv(self, readable):
-        csv_rowlist = [["SN", "Movie", "Protagonist"], [1, "Lord of the Rings", "Frodo Baggins"],
-                       [2, "Harry Potter", "Harry Potter"]]
-
-        with open('positives.csv', 'w') as file:
-            writer = csv.writer(file, dialect='excel')
-            # csv.writer(csvfile, dialect='excel', **optional_parameters)
-            writer.writerows(readable)
 
     def createDataset(self):
         print("Opening file: EP4/imdb-reviews-pt-br.csv")
@@ -100,11 +96,6 @@ class EP4:
             if positives[word] > 0:
                 del positives[word]
 
-        # print("NEGATIVES")
-        # print(negatives)
-        # print("POSITIVES")
-        # print(positives)
-
         print("Calculate the number of positives words and negatives words from training dataset")
         totalPositives = 0
         totalNegatives = 0
@@ -113,56 +104,46 @@ class EP4:
 
         for value in negatives.values():
             totalNegatives += value
-        print("Calculate the probability of positives words")
-        for key, value in positives.items():
-            self.probPositivesSummed[key] = math.log(
-                value/totalPositives, 10) * 10000
-            # self.writeFilePositive(probPositivesSummed[key])
 
-        print("Calculate the probability of negatives words")
-        for key, value in negatives.items():
-            self.probNegativesSummed[key] = math.log(
-                value/totalNegatives, 10) * 10000
-            # self.writeFileNegative(probNegativesSummed[key])
+        print("Write Model")
+        totalValues = {totalPositives: len(positives), totalNegatives: len(negatives)}
+        writeWordValueFile(totalValues)
+        writePositiveFile(positives)
+        writeNegativeFile(negatives)
+        print("Training completed")
 
-        print("POSITIVES")
-        # print(self.probPositivesSummed)
+    def formatForTest(self, text):
+        normalized = str.lower(text)
+        splitted = re.findall(r"[\w']+", normalized)
+        return splitted
 
-        print("NEGATIVES")
-        # print(self.probNegativesSummed)
-
-        # self.test("Este é um exemplo do motivo pelo qual a maioria dos filmes de ação são os mesmos. Genérico e chato, não há nada que valha a pena assistir aqui. Um completo desperdício dos talentos de Ice-T e Cubo de Gelo que foram mal aproveitados, cada um comprovando que são capazes de atuar e agir bem. Não se incomode com este, vá ver New Jack City, Ricochet ou assistir New York Undercover para Ice-T, ou Boyz no Hood, Higher Learning ou Friday for Ice Cube e ver o negócio real. Ice-Ts horrivelmente clichê diálogo sozinho faz este filme ralar os dentes, e eu ainda estou me perguntando o que diabos Bill Paxton estava fazendo neste filme? E por que diabos ele sempre interpreta exatamente o mesmo personagem? Dos extraterrestres em diante, todos os filmes que eu vi com Bill Paxton o fizeram interpretar exatamente o mesmo personagem irritante, e pelo menos em Aliens seu personagem morreu, o que o tornou um pouco gratificante ... No geral, esse é lixo de ação de segunda classe. Existem incontáveis ​​filmes melhores para ver, e se você realmente quiser ver esse filme, assista a Judgment Night, que é praticamente uma cópia carbono, mas tem melhor atuação e um roteiro melhor. A única coisa que fez isso valer a pena assistir foi uma mão decente na câmera - a cinematografia era quase refrescante, o que chega perto de compensar o horrível filme em si - mas não é bem assim. 4/10")
-        self.createCsv(self.allPositives)
-
-    def test(self, texto):
-        result = 1
+    def test(self, text):
+        numberOfPositiveSentence = 24694
+        numberOfNegativeSentence = 24765
+        formattedText = self.formatForTest(text)
+        totalPositivo = 0.0
         first = True
-        for word in texto:
-            if word in self.probPositivesSummed.keys():
-                if first:
-                    result = float(int(self.probPositivesSummed[word])) / 10000
-                    first = False
-                else:
-                    result *= float(
-                        int(self.probPositivesSummed[word])) / 10000
-            else:
-                result *= -1
-        print("%.10f" % result)
+        for word in formattedText:
+            if first:
+                totalPositivo += math.log(numberOfPositiveSentence / (numberOfNegativeSentence + numberOfPositiveSentence), 10)
+                first = False
+                continue
+            wordCount = self.positiveWords[word] if word in self.positiveWords.keys() else 0
+            totalPositivo += math.log(int(wordCount) + 1 / int(self.totalValues['positiveTotalWords']) + int(self.totalValues['positiveWordsAmount']), 10)
+        print("%.10f" % totalPositivo)
 
-        result1 = 1
+        totalNegativo = 0.0
         first = True
-        for word in texto:
-            if word in self.probNegativesSummed.keys():
-                if first:
-                    result1 = float(
-                        int(self.probNegativesSummed[word])) / 10000
-                    first = False
-                else:
-                    result1 *= float(
-                        int(self.probNegativesSummed[word])) / 10000
-            else:
-                result1 *= -1
-        print("%.10f" % result1)
+        for word in formattedText:
+            if first:
+                totalNegativo += math.log(numberOfNegativeSentence / (numberOfNegativeSentence + numberOfPositiveSentence), 10)
+                first = False
+                continue
+            wordCount = self.negativeWords[word] if word in self.negativeWords.keys() else 0
+            totalNegativo += math.log(int(wordCount) + 1 / int(self.totalValues['negativeTotalWords']) + int(self.totalValues['negativeWordsAmount']), 10)
+        print("%.10f" % totalNegativo)
+
+        print("Resultado: %s" % ("positivo" if totalPositivo > totalNegativo else "negativo"))
 
 
 ep4 = EP4()
