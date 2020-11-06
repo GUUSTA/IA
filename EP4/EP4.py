@@ -29,9 +29,9 @@ class EP4:
         self.createDataset()
         # self.train()
         self.loadModel()
-        for text in self.testableNegativeItems:
+        for text in self.testablePositiveItems:
             print()
-            print("Real resultado: Negativo")
+            print("Real resultado: Positivo")
             self.test(text)
             print()
     
@@ -125,22 +125,22 @@ class EP4:
         first = True
         for word in formattedText:
             if first:
-                totalPositivo += math.log(numberOfPositiveSentence / (numberOfNegativeSentence + numberOfPositiveSentence), 10)
+                totalPositivo += math.log((numberOfPositiveSentence / (numberOfNegativeSentence + numberOfPositiveSentence)), 10)
                 first = False
                 continue
             wordCount = self.positiveWords[word] if word in self.positiveWords.keys() else 0
-            totalPositivo += math.log(int(wordCount) + 1 / int(self.totalValues['positiveTotalWords']) + int(self.totalValues['positiveWordsAmount']), 10)
+            totalPositivo += math.log(((int(wordCount) + 1) / (int(self.totalValues['positiveTotalWords']) + int(self.totalValues['positiveWordsAmount']) + int(self.totalValues['negativeWordsAmount']))), 10)
         print("%.10f" % totalPositivo)
 
         totalNegativo = 0.0
         first = True
         for word in formattedText:
             if first:
-                totalNegativo += math.log(numberOfNegativeSentence / (numberOfNegativeSentence + numberOfPositiveSentence), 10)
+                totalNegativo += math.log((numberOfNegativeSentence / (numberOfNegativeSentence + numberOfPositiveSentence)), 10)
                 first = False
                 continue
             wordCount = self.negativeWords[word] if word in self.negativeWords.keys() else 0
-            totalNegativo += math.log(int(wordCount) + 1 / int(self.totalValues['negativeTotalWords']) + int(self.totalValues['negativeWordsAmount']), 10)
+            totalNegativo += math.log(((int(wordCount) + 1) / (int(self.totalValues['negativeTotalWords']) + int(self.totalValues['negativeWordsAmount']) + int(self.totalValues['positiveWordsAmount']))), 10)
         print("%.10f" % totalNegativo)
 
         print("Resultado: %s" % ("positivo" if totalPositivo > totalNegativo else "negativo"))
