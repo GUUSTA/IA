@@ -26,3 +26,6 @@ python3 EP1.py
 ````
 
 Pronto, o código deve estar rodando 100%.
+
+Para uma explicação mais prática, temos um vídeo no YouTube que explica o código passo a passo:
+[Trabalho EP1 - Inteligência Artificial](https://youtu.be/KYaY-r6KdCQ)
