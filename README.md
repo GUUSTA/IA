@@ -26,6 +26,8 @@ Uma vez que o Python 3 está instalado em sua máquina, basta entrar na pasta EP
 ````
 python3 EP1.py
 ````
+Para uma explicação mais prática, temos um vídeo no YouTube que explica o código passo a passo:
+[Trabalho EP1 - Inteligência Artificial](https://youtu.be/KYaY-r6KdCQ)
 
 ## EP 2 - Problema da Ladra Viajante
 O exercício consiste em criar um algoritmo genético, que resolva o problema da Ladra Viajante. Esse problema é uma junção dos problemas da Mochila e do Caixeiro Viajante. A ladra deve viajar entre as cidades, sem retornar para uma cidade que ela já tenha passado (com exceção de Escondidos que é tanto a cidade inicial como a final) e roubar itens que estão disponíveis (1 item por cidade), para vendelos posteriormente. Busca-se o maior lucro possível com seus roubos, no entanto parte do desafio é que a ladra está limitada por alguns elementos, sendo eles:
@@ -48,6 +50,8 @@ Uma vez que o Python 3 está instalado em sua máquina, basta entrar na pasta EP
 ````
 python3 EP2.py
 ````
+Para uma explicação mais prática, temos um vídeo no YouTube que explica o código passo a passo:
+[Trabalho EP2 - Inteligência Artificial](https://youtu.be/t59NHmwfkk0)
 
 ## EP 3 - Organização no Zoológico (Problema de Satisfação de Condições)
 
@@ -99,6 +103,8 @@ Para:
 first: V = unassigned[0]
 # first: V = self.mcvAlgorithm(unassigned)
 ````
+Para uma explicação mais prática, temos um vídeo no YouTube que explica o código passo a passo:
+[Trabalho EP3 - Inteligência Artificial](https://youtu.be/IG2jiuGAzGA)
 
 ## EP 4 - Naive Bayes: Classificador de emoções
 
@@ -166,3 +172,6 @@ def __init__(self):
         # self.classify()
 ````
 Depois de feito isso programa se encerrará com o modelo retreinado. Substitua de volta para utilizar esse modelo criado.
+
+Para uma explicação mais prática, temos um vídeo no YouTube que explica o código passo a passo:
+[Trabalho EP4 - Inteligência Artificial](https://youtu.be/ugok3DAoFOU)
