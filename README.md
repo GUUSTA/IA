@@ -51,3 +51,5 @@ Para:
 first: V = unassigned[0]
 # first: V = self.mcvAlgorithm(unassigned)
 ````
+Para uma explicação mais prática, temos um vídeo no YouTube que explica o código passo a passo:
+[Trabalho EP3 - Inteligência Artificial](https://youtu.be/IG2jiuGAzGA)
