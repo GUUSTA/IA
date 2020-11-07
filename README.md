@@ -23,3 +23,6 @@ Uma vez que o Python 3 está instalado em sua máquina, basta entrar na pasta EP
 python3 EP2.py
 ````
 Pronto, o código deve estar rodando 100%.
+
+Para uma explicação mais prática, temos um vídeo no YouTube que explica o código passo a passo:
+[Trabalho EP2 - Inteligência Artificial](https://youtu.be/t59NHmwfkk0)
